@@ -1,0 +1,266 @@
+{% extends "main.html" %}
+{% load static %}
+{% block content%}
+{% if order_detail %}
+            <!-- Body: Body --> 
+            <div class="body d-flex py-3">  
+                <div class="container-xxl"> 
+                    <div class="row align-items-center"> 
+                        <div class="border-0 mb-4"> 
+                            <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                                <h3 class="fw-bold mb-0">Order Details: #Order-{{order_detail.id}}</h3>
+
+                            </div>
+                        </div>
+                    </div> <!-- Row end  -->
+                    <div class="row g-3 mb-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-4">
+                        <div class="col">
+                            <div class="alert-success alert mb-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar rounded no-thumbnail bg-success text-light"><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i></div>
+                                    <div class="flex-fill ms-3 text-truncate">
+                                        <div class="h6 mb-0">Order Created at</div>
+                                        <span class="small">{{order_detail.orderdate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="alert-danger alert mb-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar rounded no-thumbnail bg-danger text-light"><i class="fa fa-user fa-lg" aria-hidden="true"></i></div>
+                                    <div class="flex-fill ms-3 text-truncate">
+                                        <div class="h6 mb-0">Name</div>
+                                        <span class="small">{{order_detail.cutomer_id}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="alert-warning alert mb-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar rounded no-thumbnail bg-warning text-light"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></div>
+                                    <div class="flex-fill ms-3 text-truncate">
+                                        <div class="h6 mb-0">Email</div>
+                                        <span class="small">{{order_detail.cutomer_id.email}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="alert-info alert mb-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar rounded no-thumbnail bg-info text-light"><i class="fa fa-phone-square fa-lg" aria-hidden="true"></i></div>
+                                    <div class="flex-fill ms-3 text-truncate">
+                                        <div class="h6 mb-0">Contact No</div>
+                                        <span class="small">{{order_detail.cutomer_id.phone_number}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- Row end  -->
+                    <div class="row g-3 mb-3 row-cols-1 row-cols-md-1 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-3 row-deck"> 
+                        <div class="col">
+                            <div class="card auth-detailblock">
+                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Delivery Address</h6>
+                                </div>
+                                {% for address in user_address%}
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Adress Line 1:</label>
+                                            <span><strong>{{address.abline1}}</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Adress Line 2:</label>
+                                            <span><strong>{{address.abline2}}</strong></span>
+                                        </div>̉
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">City:</label>
+                                            <span><strong>{{address.city}}</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Pincode:</label>
+                                            <span><strong>{{address.zip}}</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Phone:</label>
+                                            <span><strong>{{address.phone}}</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Billing Address</h6>
+                                </div>
+                                {% for address in user_address%}
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Adress Line 1:</label>
+                                            <span><strong>{{address.abline1}}</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Adress Line 2:</label>
+                                            <span><strong>{{address.abline2}}</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">City:</label>
+                                            <span><strong>{{address.city}}</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Pincode:</label>
+                                            <span><strong>{{address.zip}}</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Phone:</label>
+                                            <span><strong>{{address.phone}}</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Invoice Deatil</h6>
+                                    <button class="btn btn-secondary btn-sm" href="#" class="text-muted">Download</button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Number:</label>
+                                            <span><strong>#78414</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Seller GST :</label>
+                                            <span><strong>AFQWEPX17390VJ</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Purchase GST :</label>
+                                            <span><strong>NVFQWEPX1730VJ</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- Row end  -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-xl-12 col-xxl-8">
+                            <div class="card">
+                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Order Summary</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="product-cart">
+                                        <div class="checkout-table table-responsive">
+                                            <table id="myCartTable" class="table display dataTable table-hover align-middle" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="product">Product Image</th>
+                                                        <th>Product Name</th>
+                                                        <th class="quantity">Quantity</th>
+                                                        <th class="price">Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for product in order_detail.itemno.all %}
+                                                    <tr>
+                                                        <td>
+                                                            <img src="/{{product.product_images.image1}}" class="avatar rounded lg" alt="Product">
+                                                        </td>
+                                                        <td>
+                                                        <h6 class="title">{%if product.itmname|length > 12%}
+                                                                {{ product.itmname|slice:":12" }}..
+                                                            {% else %}
+                                                                {{ product.itmname }}
+                                                            {% endif %}<span class="d-block fs-6 text-primary">#{{product.id}}</span></h6>
+                                                        </td>
+                                                        <td>
+                                                            1
+                                                        </td>  
+                                                        <td>
+                                                            <p class="price">${{product.itm_new_price}}</p>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="checkout-coupon-total checkout-coupon-total-2 d-flex flex-wrap justify-content-end">
+                                            <div class="checkout-total">
+                                                <div class="single-total">
+                                                    <p class="value">Subotal Price:</p>
+                                                    <p class="price">$1096.00</p>
+                                                </div>
+                                                <div class="single-total">
+                                                    <p class="value">Shipping Cost (+):</p>
+                                                    <p class="price">$12.00</p>
+                                                </div>
+                                                <div class="single-total">
+                                                    <p class="value">Discount (-):</p>
+                                                    <p class="price">$10.00</p>
+                                                </div>
+                                                <div class="single-total">
+                                                    <p class="value">Tax(18%):</p>
+                                                    <p class="price">$198.00</p>
+                                                </div>
+                                                <div class="single-total total-payable">
+                                                    <p class="value">Total Payable:</p>
+                                                    <p class="price">${{order_detail.order_total}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>     
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-xxl-4">
+                            <div class="card mb-3">
+                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Status Orders</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-md-12">
+                                                <label  class="form-label">Order ID</label>
+                                                <input type="text" class="form-control" value="{{order_detail.id}}" readonly>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label  class="form-label">Order Status</label>
+                                                <input type="text" class="form-control" value="{{order_detail.id}}" readonly>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label">Quantity</label>
+                                                <input type="text" class="form-control" value="4">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label  class="form-label">Order Transection</label>
+                                                <select class="form-select" aria-label="Transection">
+                                                    <option  value="1">Completed</option>
+                                                    <option value="2">Fail</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="comment" class="form-label">Comment</label>
+                                                <textarea  class="form-control" id="comment" rows="4">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</textarea>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary mt-4 text-uppercase">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- Row end  -->
+                </div>
+            </div>
+{% endif %}
+{% endblock content%}

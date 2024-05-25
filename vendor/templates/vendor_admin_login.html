@@ -1,0 +1,126 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login - Vendor </title>
+    <link rel="icon" href="{% static 'images/favicon.png'%}" type="image/png" /> <!-- Favicon-->
+
+    <!-- plugin css file  -->
+    <link rel="stylesheet" href="{% static 'plugin/datatables/responsive.dataTables.min.css'%}">
+    <link rel="stylesheet" href="{% static 'plugin/datatables/dataTables.bootstrap5.min.css'%}">
+
+    <!-- project css file  -->
+    <link rel="stylesheet" href="{% static 'css/ebazar.style.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'css/app.css'%}">
+    <link rel="stylesheet" href="{% static 'css/boxicons.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/icons.css'%}">
+</head>
+
+<body>
+
+        <!-- main body area -->
+        <div class="main d-flex  align-items-center p-2 py-3 p-xl-5 ">
+            
+            <!-- Body: Body -->
+            <div class="body p-0 p-xl-5">
+                <div class="container-xxl">
+
+                    <div class="row g-0">
+                        <div class="col-lg-6 d-none d-lg-flex justify-content-center align-items-center rounded-lg auth-h100">
+                                    <img style="max-width:100%;" src="{% static 'images/login.svg'%}" alt="login-img">
+                        </div>
+
+                        <div class="col-lg-6 d-flex justify-content-center align-items-center border-0 rounded-lg auth-h100 mt-4">
+
+                            <div class="w-100 p-3 p-md-5 card border-1 shadow-lg" style="max-width: 32rem;">
+                                <div class="d-flex justify-content-center">
+                                    {% if messages%}{% for message in messages%}
+                                    <div class="alert {{message.tags}} fade show" id="alert-box">
+                                        <div class="d-flex align-items-center">
+                                            <i class='bx bx-info-circle fs-5 m-2'></i>
+                                        {{message}}
+                                        {% endfor %}
+                                        </div>
+                                      </div>
+                                    {% endif %}
+                                </div>
+                                <!-- Form -->
+                                <form class="row g-3" action="" Method="POST">
+                                    {% csrf_token %}
+                                    <div class="">
+                                        <div class="d-flex justify-content-center mb-0">
+                                            <img style="max-width:50%;" src="{% static 'images/logo-black.svg'%}" alt="login-img">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center mb-3">
+                                        <h5>Sign in to admin account.</h5>
+                                    </div>
+                                        <div class="col-12">
+                                            <label for="inputuserid" class="form-label">Enter Admin User or Email:</label>
+                                            <input type="text" class="form-control" name="username" placeholder="Email Address">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="inputChoosePassword" class="form-label">Enter Password:</label>
+                                            <div class="input-group" id="show_hide_password">
+                                                <input type="password" class="form-control border-end-0" name="password" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                            </div>
+                                        </div>
+                                        {% comment %} <div class="col-md-6 text-start">	<a href="{% url 'forgotpass'%}">Forgot Password ?</a>
+                                        </div> {% endcomment %}
+                                        <div class="col-12">
+                                            <div class="d-grid">
+                                                <button  type="submit" class="btn btn-lg btn-block btn-warning lift text-uppercase" value="Submit"><i class="bx bxs-lock-open"></i>Sign in</button>
+                                            </div>
+                                        </div>
+                                </form>
+                                <!-- End Form -->
+                                
+                            </div>
+                        </div>
+                    </div> <!-- End Row -->
+                    
+                </div>
+            </div>
+
+        </div>
+
+
+    <!-- Jquery Core Js -->
+    <script src="../assets/bundles/libscripts.bundle.js"></script>
+</body>
+
+
+    <!-- Jquery Core Js -->
+    <script src="../assets/bundles/libscripts.bundle.js"></script>
+<!-- Code injected by live-server -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+   function hide_alert(){
+    document.getElementById("alert-box").style.display="None";
+   }
+   setTimeout(hide_alert,5000);
+   $(function() {
+	"use strict";
+
+	$(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("bx-hide");
+                $('#show_hide_password i').removeClass("bx-show");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("bx-hide");
+                $('#show_hide_password i').addClass("bx-show");
+            }
+        });
+    });
+
+});
+</script>
+</html>

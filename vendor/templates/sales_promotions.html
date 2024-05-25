@@ -1,0 +1,73 @@
+{% extends "main.html" %}
+
+{% block content%}
+<div class="body d-flex py-lg-3 py-md-2">
+    <div class="container-xxl">
+        <div class="row align-items-center">
+            <div class="border-0 mb-4">
+                <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                    <h3 class="fw-bold mb-0">Discount coupons</h3>
+                    <div class="btn-group btn-set-task w-sm-100">
+                        <input type="search" class="form-control m-1" placeholder="Search" aria-label="search" aria-describedby="addon-wrapping">
+                        <button type="button" class="input-group-text m-1" id="addon-wrapping"><i class="fa fa-search"></i></button>
+                    </div>
+                    <div class="col-auto d-flex w-sm-100">
+                        <a href="{% url 'coupon_add'%}" class="btn btn-primary btn-set-task w-sm-100"><i class="icofont-plus-circle me-2 fs-6"></i>Add Coupons</a>
+                    </div>
+                </div>
+            </div>
+        {% if cupons%}     
+        </div> <!-- Row end  -->
+        <div class="row clearfix g-3">
+        <div class="col-sm-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <table id="myProjectTable" class="table table-hover align-middle mb-0" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Coupons Code</th>
+                                    <th>Discount</th>
+                                    <th>Type</th> 
+                                    <th>Start Date</th>
+                                    <th>End Date</th> 
+                                    <th>Status</th> 
+                                    <th>Discount Product</th>
+                                    <th>Actions</th>  
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for cupon in cupons%}
+                                <tr>
+                                <td><span class="fw-bold ms-1">{{cupon.offer}}</span></td>
+                                <td>{% if cupon.discount_value%}{{cupon.discount_value}}{% else %} None{% endif %}</td>
+                                <td>{{cupon.offer_cat}}</td>
+                                <td>{{cupon.start_date|date:"d-m-y"}}</td>
+                                <td>{{cupon.end_date|date:"d-m-y"}}</td>
+                                <td><span class="badge {% if cupon.is_active is True %}bg-success{% else%}bg-danger{% endif%}">{% if cupon.is_active is True %}Active{% else%}Inactive{% endif%}</span></td>
+                                <td>{{cupon.if_on_category}}</td>
+                                <td>
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <a href="/coupon_edit/{{cupon.id}}" class="btn btn-outline-secondary"><i class="icofont-edit text-success"></i></a>
+                                            <a href="/coupon_delete/{{cupon.id}}"type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+        </div><!-- Row End -->
+        {% else %}
+        <div class="row g-3 mt-3"> 
+            <div  class="col-md-12">
+                <div class=" text-center"> 
+                    <h3 class="m-3">You don't have any discount coupons.</h3>
+                </div>
+            </div>
+        </div> <!-- Row end  -->
+        {% endif %}
+    </div>
+</div>
+{% endblock content%}

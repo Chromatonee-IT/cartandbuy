@@ -1,0 +1,115 @@
+
+{% load static %}
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                            <div class="d-flex justify-content-start align-items-center">
+                            <img src="{% static 'images/favicon.png'%}" alt="logo" width="35" height="35" />
+                            <h3 style=" margin:0px !important;" class="banner-title">Sign In</h3>
+                            </div>
+                          <button type="button" class="btn btn-sm btn-secondary rounded" data-dismiss="modal">X</button>
+                          </div>
+                          <div class="modal-body">
+                            <div style="padding-top: 0px !important; padding-bottom: 0px !important;" class="login-popup">
+                                  <div  class="tab-content">
+                                    <div id="message-container">
+                                      <div style="display: none;" class="alert alert-danger fade show m-3 justify-content-center" id="alert-box">
+                                        <div class="d-flex align-items-center">
+                                            <i id="error_message" class='bx bx-error fs-5 m-2'></i>
+                                            <span id="error_text"></span> </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                      <div class="tab-pane active" id="sign-in">
+                                        {% comment %} <h4>Signin<h4> {% endcomment %}
+                                          <form method="post" id="login-form">
+                                              {% csrf_token %}
+                                              <div class="form-group">
+                                                <label for="username">Username or email address *</label>
+                                                <input type="text" class="form-control" name="username" id="username" required>
+                                              </div>
+                                              <div class="form-group mb-0">
+                                                <label for="password">Password *</label>
+                                                <input type="password" class="form-control" name="password" id="password" required>
+                                              </div>
+                                              <div class="form-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" class="custom-checkbox" id="remember" name="remember">
+                                                <label for="remember">Remember me</label>
+                                                <a href="#">Forgot password?</a>
+                                              </div>
+                                              <button style="width:100%" id="signin" type="button" class="btn btn-primary signin">Sign In</button>
+                                            </form>
+                                      </div>
+                                  {% comment %} <p class="text-center">Sign in with social account</p>
+                                  <div class="social-icons social-icon-border-color d-flex justify-content-center">
+                                      <a href="#" class="social-icon social-google fab fa-google"></a>
+                                  </div> {% endcomment %}
+                              </div>
+                          </div>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+
+<script>
+
+  function hide_alert(){
+    document.getElementById("alert-box").style.display="None";
+   }
+
+  document.getElementById("signin").addEventListener("click",function() {
+
+    event.preventDefault(); // Prevent default form submission
+
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+    console.log(username)
+    console.log(password)
+    console.log(csrfToken)
+
+
+    // Prepare form data
+    var formData = {
+      'csrfmiddlewaretoken': csrfToken,
+      'username': username,
+      'password': password
+    };
+
+    console.log(formData);
+
+    $.ajax({
+      type: 'POST',
+      url: '/login-popup/', // Replace with your login view URL
+      data: formData,
+      success: function(response) {
+        if (response.status === true) {
+          window.location.reload();
+        } else {
+          var alert_code = document.getElementById("error_text");
+          alert_code.innerHTML = `<span id="error_text"></span>${response.error}</div>`
+          document.getElementById("alert-box").style.display="";
+          setTimeout(hide_alert,5000);
+        }
+      },
+      error: function(xhr, status, error) {
+        var jsonResponse = JSON.parse(xhr.responseText);
+        if (jsonResponse.error) {
+          console.log(jsonResponse.error);
+          console.log("!111111");
+        } else {
+          // Handle other types of errors
+          console.log(error);
+          console.log("!111111");
+
+        }
+      }
+    });
+  });
+
+
+   
+
+</script>

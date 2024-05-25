@@ -1,0 +1,488 @@
+{% extends "store/main.html" %}
+
+{% load static%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"> 
+{% block content%}
+{% if cur_user %}
+<div class="d-flex justify-content-center">
+    {% if messages%}{% for message in messages%}
+    <div class="alert {{message.tags}} fade show" id="alert-box">
+        <div class="d-flex align-items-center">
+            <i class='bx bx-info-circle fs-5 m-2'></i>
+        {{message}}
+        {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+</div>
+		<!--start page wrapper -->
+		{% comment %} <div class="page-wrapper">
+			<div class="page-content">
+				<!--start breadcrumb-->
+                <section class="py-3 border-bottom border-top  d-flex bg-light">
+                    <div class="container">
+                        <div class="page-breadcrumb d-flex align-items-center">
+                            <h3 class="breadcrumb-title pe-3">My Addresses</h3>
+                            <div class="ms-auto">̉
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb mb-0 p-0">
+                                        <li class="breadcrumb-item"><a href="javascript:;">Account</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">Address</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+				<!--end breadcrumb-->
+				<!--start shop cart-->
+				<section class="py-4">
+					<div class="container">
+						<h3 class="d-none">Account</h3>
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-lg-4">
+										<div class="card shadow-none mb-3 mb-lg-0 border">
+											<div class="card-body">
+												<div class="list-group list-group-flush">
+                                                    <a href="{% url 'dashboard'%}" class="list-group-item d-flex justify-content-between align-items-center">Account Details <i class='bx bx-user-circle fs-5'></i></a>
+													<a href="{% url 'orders'%}" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Orders <i class='bx bx-box fs-5'></i></a>
+													<a href="{% url 'address'%}" class="list-group-item active d-flex justify-content-between align-items-center">Addresses <i class='bx bx-home-smile fs-5'></i></a>
+
+                                                    <a href="{% url 'referal'%}" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Refer and earn <i class='bx bxs-user-account'></i></a>
+                                                    <a href="{% url 'payment_method'%}" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">My Reviews <i class='bx bx-star fs-5'></i></a>
+													<a href="{% url 'logout'%}" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Logout <i class='bx bx-log-out fs-5'></i></a>
+												</div>
+											</div>
+										</div>
+                                        <div class="container border my-3 rounded">
+											<div class="card-body">
+											<div class="list-group list-group-flush">
+											<a href="{% url 'cart'%}" class="list-group-item d-flex justify-content-between align-items-center">Cart <i class='bx bx-cart-alt fs-5'></i></a>
+											<a href="{% url 'my_favourites'%}" class="list-group-item d-flex justify-content-between align-items-center">Favourites <i class='bx bx-heart fs-5'></i></a>
+										</div>
+										</div>
+                                    </div>
+									</div>
+									<div class="col-lg-8">
+										<div class="card shadow-none mb-0">
+											<div class="card-body">
+												<h6 style="margin-left:25px;" class="mb-4"><span style="color:red;">**</span> The following addresses will be used as Billing Address by default.</h6>
+                                                <div class="container px-4" >
+												<div class="row">
+													<div class="col-12 col-lg-6">
+														<h5 class="mb-3">Current Billing Address:</h5>
+														<address class=" border rounded p-3">
+                                                    {% for address in addresses %}
+                                                        {% if address.isactive%}
+                                                                {{address.name}}<br>
+                                                                {{address.abline1}}<br>
+                                                                {{address.abline2}}<br>
+                                                                {{address.city}}<br>
+                                                                {{address.state}}<br>
+                                                                {{address.country}}<br>
+                                                                {{address.zip}}<br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% if not addresses%}
+                                                    ** You don't have any address in your account.<br>
+                                                    Please create a new address.<br>
+                                                    {%endif%}
+												  </address>
+													</div>
+												</div>
+												<!--end row-->
+                                                </div>
+											</div>
+                                            <div class="container m-3">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-dark btn-sm rounded-0" data-bs-toggle="modal" data-bs-target="#Addmodal">
+                                                Add New
+                                            </button>
+                                            <!-- Modal -->
+                                            <div style="z-index:1000000" class="modal fade" id="Addmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Address</h1>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="card shadow-none mb-0 border">
+                                                            <div class="card-body">
+                                                                <form method="post" name="add" class="row g-3">
+                                                                    {% csrf_token %}
+                                                                    <div class="col-12">
+                                                                        <label input="text" class="form-label">Name</label>
+                                                                        <input type="text"
+                                                                        name="name" class="form-control" placeholder="Madison">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-label">Phone</label>
+                                                                        <input type="phone" class="form-control" 
+                                                                        name="phone" placeholder="0123456789">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-label">Email address</label>
+                                                                        <input type="text" class="form-control" 
+                                                                        name="email" placeholder="madison.ruiz@gmail.com">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-label">Address Line 1</label>
+                                                                        <input type="text" class="form-control" 
+                                                                        name="adrline1" placeholder="Address Line 1">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-label">Address Line 2</label>
+                                                                        <input type="text" class="form-control" 
+                                                                        name="adrline2" placeholder="Address Line 2">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-label">Address Line 3</label>
+                                                                        <input type="text" class="form-control" 
+                                                                        name="adrline3" placeholder="Address Line 3">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-label">City</label>
+                                                                        <input type="text" class="form-control" 
+                                                                        name="city" placeholder="City">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-label">State</label>
+                                                                        <input type="text" class="form-control" 
+                                                                        name="state" placeholder="State">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-label">Country</label>
+                                                                        <input type="text" class="form-control" 
+                                                                        name="country" placeholder="State">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label class="form-label">Postal Code</label>
+                                                                        <input type="text" class="form-control" 
+                                                                        name="zip" placeholder="Postal code">
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary btn-sm rounded-0 " data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="address_addbtn" value="Submit" class="btn btn-dark btn-sm rounded-0">Save Changes</button>
+                                                    </div>
+                                                </div>
+                                                </form>
+                                            </div>
+                                                
+                                            </div>
+                                            <!-- Button to open the main modal -->
+                                             <button type="button" class="btn btn-dark btn-sm rounded-0 mx-1" id="openMainModalBtn">
+                                                View All</button> 
+
+                                            <!-- Main Modal -->
+                                            <div style="z-index:1000000000" class="modal fade" id="mainModal" tabindex="-1" aria-labelledby="mainModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialogg-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="mainModalLabel">All Address</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="container">
+                                                            {% for address in addresses%}
+                                                            <div class="row border my-2">
+                                                                <div class="col-12 col-lg-12 p-2">
+                                                                    <div class="container">
+                                                                    <h5 class="mb-3">{{address.name}}'s Address &nbsp&nbsp
+                                                                        {% if address.isactive%}
+                                                                        <span style="background:#86ab50; padding:5px; border:1px black; color: white; font-size: 1.2rem;" class="rounded">Default</span>{% else %}{% endif %}
+                                                                    </h5>
+                                                                    <address>
+                                                                        {{address.abline1}}<br>
+                                                                        {{address.abline2}}<br>
+                                                                        {{address.phone}}<br>
+                                                                        {{address.city}}<br>
+                                                                        {{address.state}}<br>
+                                                                        {{address.country}}<br>
+                                                                        {{address.zip}}<br>
+                                                                        
+                                                                    </address>
+                                                                    </div>
+                                                                    <div class="container d-flex align-items-center">
+
+                                                                    <a href="#" class="btn btn-dark btn-sm rounded-0" data-bs-toggle="modal" data-bs-target="#editmodal-{{address.id}}">Edit Address</a>
+
+
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            {% endfor %}
+                                                            {% if not addresses%}
+                                                            <div class="row border rounded p-1 m-1">
+                                                                <div class="col-12 col-lg-12">
+                                                                    <div class="container">
+                                                                    <address>
+                                                                        You don't have any address in your account.<br>
+                                                                        Please create a new address.<br> 
+                                                                    </address>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {%endif%}
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary btn-sm rounded-0 mx-1" data-bs-dismiss="modal">Close</button>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--Nested Modal -->
+                                            {% for address in addresses %}
+                                            <div style="z-index:1000000000" class="modal editmodal" id="editmodal-{{address.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Address</h1>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="card shadow-none mb-0 border">
+                                                                <div class="card-body">
+                                                                    <form method="post" name="edit" class="row g-3">
+                                                                        {% csrf_token %}
+                                                                        <div class="col-12 d-none">
+                                                                            <label input="text" class="form-label">Name</label>
+                                                                            <input type="text"
+                                                                            name="id" class="form-control" value="{{address.id}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label input="text" class="form-label">Name</label>
+                                                                            <input type="text"
+                                                                            name="name_edit" class="form-control" value="{{address.name}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">Phone</label>
+                                                                            <input type="phone" class="form-control" 
+                                                                            name="phone_edit" value="{{address.phone}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">Email address</label>
+                                                                            <input type="text" class="form-control" 
+                                                                            name="email_edit" value="{{address.email}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">Address Line 1</label>
+                                                                            <input type="text" class="form-control" 
+                                                                            name="adrline1_edit" value="{{address.abline1}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">Address Line 2</label>
+                                                                            <input type="text" class="form-control" 
+                                                                            name="adrline2_edit" value="{{address.abline2}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">Address Line 3</label>
+                                                                            <input type="text" class="form-control" 
+                                                                            name="adrline3_edit" value="{{address.abline3}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">City</label>
+                                                                            <input type="text" class="form-control" 
+                                                                            name="city_edit" value="{{address.city}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">State</label>
+                                                                            <input type="text" class="form-control" 
+                                                                            name="state_edit" value="{{address.state}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">Country</label>
+                                                                            <input type="text" class="form-control" 
+                                                                            name="country_edit" value="{{address.country}}">
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">Postal Code</label>
+                                                                            <input type="text" class="form-control" 
+                                                                            name="zip_edit"
+                                                                            value="{{address.zip}}">
+                                                                        </div>
+                                                                        <div style="display:flex; flex-direction:column" class="col-12">
+                                                                            <label class="form-label">Default address</label>
+                                                                            <div style="display:flex; flex-direction:row; box-shadow:none;" class="card align-items-center p-2">
+                                                                            <input class="form-check-input mt-0 align-items-cente mx-2" name="default_address" type="checkbox" aria-label="default_address" {% if address.isactive%}checked{% else %} '' {% endif %}>Make Default</input>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="submit" name="address_editbtn" class="btn btn-dark btn-sm rounded-0 mt-2">Save</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-dark btn-sm rounded-0 backToMainModalBtn" id="backToMainModalBtn">
+                                                            Back
+                                                            </button>
+                                                            <button type="button" name="address_editbtn" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                            </div>
+                                            {% endfor %}
+                                            
+                                            <script type="text/javascript">
+                                                // JavaScript code to open and close modals
+                                                document.getElementById('openMainModalBtn').addEventListener('click', function () {
+                                                    $('#mainModal').modal('show');
+                                                });
+
+                                                $(document).ready(function() {
+                                                    $("#MyModal").modal();
+                                                  });
+
+                                                document.getElementById('backToMainModalBtn').addEventListener('click', function () {
+                                                    var backButtons = document.getElementsByClassName("backToMainModalBtn");
+                                                    for (var i = 0; i < backButtons.length; i++) {
+                                                        backButtons[i].addEventListener('click', function () {
+                                                            var nestedModal = $(this).closest('.modal');
+                                                            nestedModal.modal('hide'); // Hide the current nested modal
+                                                            $('#mainModal').modal('show'); // Show the main modal
+                                                        });
+                                                    }
+                                                });
+                                                function hide_alert(){
+                                                    document.getElementById("alert-box").style.display="None";
+                                                   }
+                                                   setTimeout(hide_alert,5000);
+                                            </script>
+									</div>
+								</div>
+								<!--end row-->
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end shop cart-->
+			</div>
+		</div> {% endcomment %}
+		<!--end page wrapper -->
+
+
+        <main class="main">
+
+            <!-- Start of Breadcrumb -->
+            <nav class="breadcrumb-nav">
+                <div class="container">
+                    <ul class="breadcrumb">
+                        <li><a href="demo1.html">Home</a></li>
+                        <li>My account</li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- End of Breadcrumb -->
+
+            <!-- Start of PageContent -->
+            <div class="page-content pt-2">
+                <div class="container">
+                    <div class="icon-box icon-box-side icon-box-light d-flex">
+                        <span class="icon-box-icon icon-map-marker">
+                            <i class="w-icon-map-marker"></i>
+                        </span>
+                        <div class="icon-box-content">
+                            <h4 class="icon-box-title mb-0 ls-normal">Addresses</h4>
+                        </div>
+                    </div>
+                    <div class="tab tab-vertical row gutter-lg">
+                        <div class="link-item">
+                            <h4 style="margin-right:15px;" class="icon-box-title mb-0 ls-normal">Menu</h4>
+                            <div class="container">
+                                <button onclick="show_hide_menu();" class="hamburger-btn">&#9776;</button>
+                                <button style="display: none" onclick="show_hide_menu();" class="cross-btn">&#735;</button>
+                                <div style="display: none" class="menu-container">
+                                <div class="menu-content">
+                                    <ul>
+                                    <a href="{% url 'dashboard'%}"><li>Dashboard</li></a>
+                                    <a href="{% url 'orders'%}"><li>Orders</li></a>
+                                    <a href="{% url 'referal'%}"><li>Refer & Earn</li></a>
+                                    <a href="{% url 'address'%}"><li>Addresses</li></a>
+                                    <a href="{% url 'my_reviews'%}"><li>My reviews</li></a>
+                                    </ul>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content mb-6">
+                           <div class="tab-pane active in mb-4" id="account-addresses" style="max-height: 100vh; overflow-y: auto;">
+
+                                <p>The following addresses will be used on the checkout page.</p>
+                                <a href="/address-add/" style="border: 1px solid black;" class="d-flex align-items-center mb-3">
+                                <div style="height:50px;" class="d-flex align-items-center">
+                                    <h5 style="margin:0px !important;padding-left:20px;">+ Add new</h5>
+                                </div>
+                                </a>
+                                
+                                <div class="row">
+                                    {% for address in addresses %}
+                                     
+                                    <div class="col-sm-6 mb-6">
+                                        <div class="ecommerce-address billing-address pr-lg-8">
+                                            <h4 class="title title-underline ls-25 font-weight-bold">Address {{forloop.counter}}</h4>
+                                            <address class="mb-4">
+                                            
+                                                <table class="address-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Name:</th>
+                                                            <td>{{address.name}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Address:</th>
+                                                            <td>{{address.abline1}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Street:</th>
+                                                            <td>{{address.abline2}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>City:</th>
+                                                            <td>{{address.city}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>State:</th>
+                                                            <td>{{address.state}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Country:</th>
+                                                            <td>{{address.country}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Postcode:</th>
+                                                            <td>{{address.zip}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Phone:</th>
+                                                            <td>{{address.phone}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            
+                                            </address>
+                                            <a href="/address-edit/{{address.id}}"
+                                                class="btn btn-link btn-underline btn-icon-right text-primary">Edit
+                                                your address<i class="w-icon-long-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of PageContent -->
+        </main>
+
+
+{% endif %}
+{% endblock content%}

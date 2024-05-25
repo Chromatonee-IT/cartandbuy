@@ -1,0 +1,26 @@
+a{
+    text-decoration: none !important;
+    color: #000;
+}
+
+.item{
+    object-fit: contain;
+}
+
+.image_style{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+  
+.store-image{
+    height: 200px;
+    width: 200px;
+}
+
+@media screen and (max-height: 500px) and (min-width: 772px) {
+	.login-page {
+	  min-width: 100vh;
+	}
+  }

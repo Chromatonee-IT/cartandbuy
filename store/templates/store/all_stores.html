@@ -1,0 +1,28 @@
+{% extends "store/main.html" %}
+
+{% load static%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% block content%}
+<div class="container">
+<div class="container">
+    <div class="row mt-5">
+      <div class="preview-card col-lg-12 col-md-12 col-sm-6">
+        <div class="preview-card__wrp">
+          <div class="preview-card__item">
+            <div class="preview-card__img">
+              <img src="{% static 'images/logo.png'%}" alt="">
+            </div>
+            <div class="preview-card__content">
+              <span class="preview-card__code">26 December 2023¸</span>
+              <div class="preview-card__title">Demo Store</div>
+              <div class="preview-card__text">This is a demo description of the store. </div>
+              <a href="#" class="preview-card__button">READ MORE</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content%}

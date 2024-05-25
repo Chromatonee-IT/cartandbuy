@@ -1,0 +1,10 @@
+<script>
+    const element = document.getElementById("ratings-{{ product.id }}");
+  
+    // ... (logic to access product data based on product.id)
+  
+    const averageRating = {{ product.average_rating }}; 
+    const width = averageRating * 20 + "%";
+    element.style.width = `${width}`;
+  </script>
+  

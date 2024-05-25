@@ -1,0 +1,120 @@
+{% extends "store/main.html" %}
+
+{% load static%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% block content%}
+<section class="py-3 border-bottom border-top  d-flex bg-light">
+    <div style="background:white" class="container">
+        <section class="py-3 border-bottom border-top  d-flex bg-light">
+            <div class="container">
+                <div class="page-breadcrumb d-flex align-items-center">
+                    <h3 class="breadcrumb-title pe-3 mt-3">Favourites</h3>
+                </div>
+            </div>
+        </section>
+        <hr>
+        <div class=" product-wrapper appear-animate">
+            <div class="tab-pane active pt-4" id="tab1-1">
+                <div class="row cols-xl-5 cols-md-4 cols-sm-3 cols-2">
+                    {% for product in products%}
+                    <div id="product-{{product.product.id}}" class="product-wrap">
+                        <div class="product text-center">
+                            <figure class="product-media">
+                                <a>
+                                    <img {% if product.product.product_images.image1%}
+                                    src="{{product.product.product_images.image1.url}}" 
+                                    {% elif product.product.product_images.image2%}
+                                    src="{{product.product.product_images.image2.url}}" 
+                                    {% elif product.product.product_images.image3%}
+                                    src="{{product.product.product_images.image3.url}}" 
+                                    {% elif product.product.product_images.image4%}
+                                    src="{{product.product.product_images.image4.url}}" 
+                                    {% elif product.product.product_images.image5%}
+                                    src="{{product.product.product_images.image5.url}}" 
+                                    {% else %} 
+                                    src="" 
+                                    {% endif %}  alt="Product"
+                                        width="300" height="338" />
+
+                                    <img {% if product.product.product_images.image1%}
+                                    src="{{product.product.product_images.image1.url}}" 
+                                    {% elif product.product.product_images.image2%}
+                                    src="{{product.product.product_images.image2.url}}" 
+                                    {% elif product.product.product_images.image3%}
+                                    src="{{product.product.product_images.image3.url}}" 
+                                    {% elif product.product.product_images.image4%}
+                                    src="{{product.product.product_images.image4.url}}" 
+                                    {% elif product.product.product_images.image5%}
+                                    src="{{product.product.product_images.image5.url}}" 
+                                    {% else %} 
+                                    src="" 
+                                    {% endif %}  alt="Product"
+                                        width="300" height="338" />
+                                </a>
+                                <div class="product-action-vertical">
+                                    <a style="color:red;" onclick="remove_item({{product.product.id}})" class="btn-product-icon btn-wishlist w-icon-heart-full"
+                                        title="remove from favourites"></a>
+                                </div>
+                            </figure>
+                            <div class="product-details">
+                                <h4 class="product-name"><a href="{% url 'product_single' id=product.product.id %}">{{product.product.itmname}}</a></h4>
+                                <h4 style="color:#b3591d;" class="product-name"><a href="/all_category/{{product.product.itmclass}}/">{{product.product.itmclass}}</a></h4>
+                                <div class="ratings-container">
+                                    <div class="ratings-full">
+                                        <span id="ratings-{{forloop.counter}}" class="ratings" style="width: 0%;"></span>
+                                        <script>
+                                        var element = document.getElementById("ratings-"+{{forloop.counter}});
+                                        var width = {{product.product.average_rating}} * 20 + "%";
+                                        element.style.width = `${width}`;
+                                         </script>
+                                        <span class="tooltiptext tooltip-top"></span>
+                                    </div>
+                                    <a href="product-default.html" class="rating-reviews">({{product.product.total_review}} Reviews)</a>
+                                </div>
+                                <div class="product-price">
+                                    <ins class="new-price">₹{{product.product.itm_new_price}}</ins>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    async function fetchData(url) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return null;
+        }
+    }
+    function remove_item(id){
+        var item_id = id
+        const baseUrl = window.location.origin;
+        const url= baseUrl + '/remove_from_favourite/' + item_id + '/'
+
+        fetchData(url)
+        .then(data => {
+            if (data) {
+                var element = document.getElementById("product-"+`${item_id}`);
+                element.style.display = "None";
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }
+</script>
+{% endblock content %}
+        <!-- End of Tab Pane -->

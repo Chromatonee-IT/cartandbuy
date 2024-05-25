@@ -1,0 +1,89 @@
+{% extends "store/main.html" %}
+{% load static%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% block content%}
+<!--start shop cart-->
+<section class="">
+    <div class="container">
+        <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5">
+            <div class="row row-cols-1 row-cols-xl-2">
+                <div class="col mx-auto">
+                    {% if messages%}{% for message in messages%}
+                                
+                    <div class="alert {{message.tags}} fade show m-3 justify-content-center" id="alert-box">
+                        <div class="d-flex align-items-center">
+                            <i class='bx bx-error fs-5 m-2'></i>
+                        
+                        {{message}}
+                        {% endfor %}
+                        </div>
+                      </div>
+                    {% endif %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="border p-4 rounded">
+
+                                <div class="text-center">
+                                    <h3 class="">Verify email</h3>
+                                    <p class="text-muted">OTP sent to your email. Please enter the code to verify your email.  <a href="{% url 'resend_otp_email'%}">Resed OTP</a>
+                                    </p>
+                                </div>
+                                <div class="form-body">
+                                    <form class="row g-3" action="" Method="POST">
+                                        {% csrf_token %}
+                                        <div class="col-12">
+                                            <label for="inputChoosePassword" class="form-label">Enter OTP:</label>
+                                            <div class="input-group" id="show_hide_password">
+                                                <input type="password" class="form-control border-end-0" name="user_otp" placeholder="Enter OTP"><a href="" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 text-end">	
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-dark" value="Submit"><i class='bx bx-check-circle'></i>Verify</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+   function hide_alert(){
+    document.getElementById("alert-box").style.display="None";
+   }
+   setTimeout(hide_alert,5000);
+   $(function() {
+	"use strict";
+
+	$(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("bx-hide");
+                $('#show_hide_password i').removeClass("bx-show");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("bx-hide");
+                $('#show_hide_password i').addClass("bx-show");
+            }
+        });
+    });
+
+});
+</script>
+<!--end shop cart-->
+{% endblock content%}
+
+
+

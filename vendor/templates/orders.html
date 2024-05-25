@@ -1,0 +1,72 @@
+{% extends "main.html" %}
+
+{% block content%}
+<div class="body d-flex py-3">  
+    <div class="container-xxl"> 
+        <div class="row align-items-center"> 
+            <div class="border-0 mb-4"> 
+                <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                    <h3 class="fw-bold mb-0">Orders List</h3>
+                    <div class="btn-group btn-set-task w-sm-100">
+                        <input type="search" class="form-control m-1" placeholder="Search" aria-label="search" aria-describedby="addon-wrapping">
+                        <button type="button" class="input-group-text m-1" id="addon-wrapping"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Row end  -->
+        {% if order_list%}
+        <div class="row g-3 mb-3"> 
+            <div class="col-md-12">
+                <div class="card"> 
+                    <div class="card-body"> 
+                        <table id="myDataTable" class="table table-hover align-middle mb-0" style="width: 100%;">  
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Image</th>
+                                    <th>Item</th>
+                                    <th>Customer Name</th>
+                                    <th>Payment Info</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for orders in order_list%}
+                                <tr>
+                                    <td><a href="/order_details/{{orders.id}}"><strong>{{orders.id}}</strong></a></td>
+                                    {% for product in orders.itemno.all %}
+                                    {% if forloop.first %}
+                                    <td>
+                                        <a href="/order_details/{{orders.id}}"><img style="object-fit: contain;" src="/{{product.product_images.image1}}" class="avatar lg rounded me-2" alt="profile-image"><span></span></a>
+                                    </td>
+                                    <td>{{ product.itmname }}... </td>
+                                    {% endif %} 
+                                {% endfor %}
+                                    
+                                    <td>{{orders.cutomer_id}}</td>
+                                    <td>{{orders.paymentid}}</td>
+                                    <td>
+                                        ${{orders.order_total}}
+                                    </td>
+                                    <td><span class="badge bg-warning">Progress</span></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Row end  -->
+        {% else %}
+        <div class="row g-3 mt-3"> 
+            <div  class="col-md-12">
+                <div class=" text-center"> 
+                    <h3 class="m-3">You don't have any orders.</h3>
+                </div>
+            </div>
+        </div> <!-- Row end  -->
+        {% endif %}
+    </div>
+</div>
+{% endblock content%}

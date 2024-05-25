@@ -1,0 +1,349 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content%}
+<div class="body d-flex py-3">
+    <div class="container-xxl">
+        <div class="row align-items-center">
+            <div class="border-0 mb-4">
+                <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                    <h3 class="fw-bold mb-0">Products</h3>
+                    <div class="btn-group btn-set-task w-sm-100">
+                    <form method="GET" class="d-flex">
+                        <input type="search" class="form-control m-1" placeholder="Search" name="search" aria-describedby="addon-wrapping">
+                        <button type="submit" class="input-group-text m-1" id="addon-wrapping"><i class="fa fa-search"></i></button>
+                    </form>
+                    </div>
+
+                    <div class="btn-group group-link btn-set-task w-sm-100">
+                        <a href="{% url 'product_add'%}" class="btn active d-inline-flex align-items-center"><i class="icofont-plus px-2 fs-5"></i>Add Product</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Row end  -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-12 col-lg-4 col-xl-4 col-xxl-3">
+                <div class="sticky-lg-top">
+                    <div class="card mb-3">
+                        <div class="reset-block">
+                            <div class="filter-title">
+                                <h4 class="title">Filter</h4>
+                            </div>
+                            <div class="filter-btn">
+                                <a class="btn btn-danger" style="color:white" href="{% url 'products'%}">Reset</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="categories">
+                            <div class="filter-title">
+                                <a class="title" data-bs-toggle="collapse" href="#category" role="button" aria-expanded="true">Categories</a>
+                            </div>
+                            <div class="collapse show" id="category" >
+                                <div class="rating-check">
+                                    <ul class="category-list">
+                                        {% for category in categories %}
+                                        <li><input type="radio" id = "category-{{category.id}}" name="category" onchange="filter_category()" value="{{category.id}}">
+                                        <label class="form-check-label" for="Categories ">
+                                        {{category.classname}}
+                                        </label>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% comment %} <div class="card mb-3">
+                        <div class="price-range-block">
+                            <div class="filter-title">
+                                <a class="title" data-bs-toggle="collapse" href="#pricingTwo" role="button" aria-expanded="false">Pricing Range</a>
+                            </div>
+                            <div class="collapse show" id="pricingTwo">
+                                <div class="price-range">
+                                    <div class="price-amount flex-wrap">
+                                        <div class="amount-input mt-1">
+                                            <label class="fw-bold">Minimum Price</label>
+                                            <input type="text" id="minAmount2" class="form-control">
+                                        </div>
+                                        <div class="amount-input mt-1">
+                                            <label class="fw-bold">Maximum Price</label>
+                                            <input type="text" id="maxAmount2" class="form-control">
+                                        </div>                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+
+
+                    <div class="card">
+                        <div class="rating-block">
+                            <div class="filter-title">
+                                <a class="title" data-bs-toggle="collapse" href="#rating" role="button" aria-expanded="false">Select Rating</a>
+                            </div>
+                            <div class="collapse show" id="rating">
+                                <div class="filter-rating" name="filter_rating">
+                                    <ul>
+                                        <li>
+                                            <div class="rating-check" style="margin-bottom:7px;" >
+                                                <input type="radio" id="rating-5" name="rating" value="5" onchange="filter_star()" >
+                                                <label for="rating-5"><span></span>
+                                                    
+                                                </label>
+                                                <p style="all: initial; margin-left: 5px;">
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="rating-check" style="margin-bottom:7px;" >
+                                                <input type="radio" id="rating-4" name="rating" value="4" onchange="filter_star()">
+                                                <label for="rating-4"><span></span></label>
+                                                <p style="all: initial; margin-left: 5px;">
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="rating-check" style="margin-bottom:7px;" >
+                                                <input type="radio" id="rating-3" name="rating" value="3" onchange="filter_star()">
+                                                <label for="rating-3"><span></span></label>
+                                                <p style="all: initial; margin-left: 5px;">
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="rating-check" style="margin-bottom:7px;" >
+                                                <input type="radio" id="rating-2" name="rating" value="2" onchange="filter_star()">
+                                                <label for="rating-2"><span></span></label>
+                                                <p style="all: initial; margin-left: 5px; ">
+                                                    <i class="icofont-star"></i>
+                                                    <i class="icofont-star"></i>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="rating-check" style="margin-bottom:7px;" >
+                                                <input type="radio" id="rating-1" name="rating" value="1" onchange="filter_star()">
+                                                <label for="rating-1"><span></span></label>
+                                                <p style="all: initial; margin-left: 5px;">
+                                                    <i class="icofont-star"></i>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if products%}
+            <div class="col-md-12 col-lg-8 col-xl-8 col-xxl-9">
+                <div class="card mb-3 bg-transparent p-2">
+                    {% for product in products %}
+                    <div class="card border-0 mb-1">
+                        <div class="form-check form-switch position-absolute top-0 end-0 py-3 px-3 d-none d-md-block">
+                        {% if product.itm_isactive%}
+                            <input class="form-check-input mr-2 toggle-product" type="checkbox" id="toggle-product-{{ product.id }}" checked>
+                            <label class="form-check-label" for="toggle-product-{{ product.id }}">Active</label>
+                        {% else %}
+                        <input class="form-check-input mr-2 toggle-product" type="checkbox" id="toggle-product-{{ product.id }}">
+                        <label class="form-check-label" for="toggle-product-{{ product.id }}">Inactive</label>
+                        {% endif %}
+                        </div>
+                        <div class="card-body d-flex align-items-center flex-column flex-md-row">
+                            <a href="/product_details/{{product.id}}">
+                                <img class="w120 rounded img-fluid" src="{% if product.product_images.image1%}{{product.product_images.image1.url}}{%else%}{%static 'images/product/productslide-2.jpg'%}{% endif %}" alt="image">
+                            </a>
+                            <div class="ms-md-4 m-0 mt-4 mt-md-0 text-md-start text-center w-100">
+                                <a href="/product_details/{{product.id}}"><h6 class="mb-3 fw-bold">{{product.itmname}}<span class="text-muted small fw-light d-block">Product Id: #{{product.id}}</span></h6></a>
+                                    <div class="d-flex flex-row flex-wrap align-items-center justify-content-center justify-content-md-start">
+                                        <div class="pe-xl-5 pe-md-4 ps-md-0 px-3 mb-2">
+                                            <div class="text-muted small">Special priceends</div>
+                                            <strong>20h:46m:30s</strong>
+                                        </div>
+                                        <div class="pe-xl-5 pe-md-4 ps-md-0 px-3 mb-2">
+                                            <div class="text-muted small">Offer</div>
+                                            <strong>Bank Offer</strong>
+                                        </div>
+                                        <div class="pe-xl-5 pe-md-4 ps-md-0 px-3 mb-2">
+                                            <div class="text-muted small">Price</div>
+                                            <strong>${{product.itm_new_price}}</strong>
+                                        </div>
+                                        <div class="pe-xl-5 pe-md-4 ps-md-0 px-3 mb-2">
+                                            <div class="text-muted small">Ratings</div>
+                                            <strong><i class="icofont-star text-warning"></i>{{product.average_rating}}<span class="text-muted">&nbsp({{product.total_review}})</span></strong>
+                                        </div>
+                                    </div>
+                                    <div class="pe-xl-5 pe-md-4 ps-md-0 px-3 mb-2 d-inline-flex d-md-none" style="
+                                    gap: 5px;
+                                ">
+                                        
+                                {% if product.itm_isactive%}
+                                <input class="form-check-input mr-2 toggle-product" type="checkbox" id="toggle-product-{{ product.id }}" checked>
+                                <label class="form-check-label" for="toggle-product-{{ product.id }}">Active</label>
+                            {% else %}
+                            <input class="form-check-input mr-2 toggle-product" type="checkbox" id="toggle-product-{{ product.id }}">
+                            <label class="form-check-label" for="toggle-product-{{ product.id }}">Inactive</label>
+                            {% endif %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-12">
+                    {% if products.has_other_pages %}
+                        <nav class="justify-content-end d-flex">
+                            <ul class="pagination">
+                        {% if products.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="/products/?page={{products.previous_page_number}}" tabindex="-1">Previous</a>
+                            </li>       
+                        {% endif %}
+                        {% for i in products.paginator.page_range %}
+                        {% if i == products.number%}
+                        <li class="page-item" area-current="page"><a class="page-link" href="/products/?page={{i}}">{{i}}</a></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="/products/?page={{i}}">{{i}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if products.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="/products/?page={{products.next_page_number}}">Next</a>
+                            </li>
+                        {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-md-12 col-lg-8 col-xl-8 col-xxl-9">
+            <div class=" mb-3 bg-transparent p-2">
+            <div class="row g-3 mt-3"> 
+                <div  class="col-md-12">
+                    <div class=" text-center"> 
+                        <h3 class="m-3">No Products</h3>
+                    </div>
+                </div>
+            </div> <!-- Row end  -->
+            </div> <!-- Row end  -->
+            </div> <!-- Row end  -->
+            {% endif %}
+        </div> <!-- Row end  -->
+
+
+    </div>
+</div>
+
+{% block javascript %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.toggle-product').click(function() {
+        var productId = $(this).attr('id').split('-')[2];
+        var isChecked = $(this).prop('checked');
+
+        $.ajax({
+          url: '/toggle-product/' + productId + '/',
+          method: 'GET',
+          success: function(response) {
+            if (response.success) {
+              if (isChecked) {
+                $('#toggle-product-' + productId).next('.form-check-label').text('Active');
+              } else {
+                $('#toggle-product-' + productId).next('.form-check-label').text('Inactive');
+              }
+            }
+          },
+          error: function(xhr, status, error) {
+            alert('Error toggling product state: ' + error);
+          }
+        });
+      });
+    });
+
+    function filter_category(){
+        var selectedValue = document.querySelector('input[name="category"]:checked').value;
+        var cur_url = window.location.href;
+        // Check if the current URL already contains query parameters
+        if (cur_url.indexOf('?') !== -1) {
+            if (cur_url.indexOf('category=') !== -1) {
+                // Replace the value of the 'rating' parameter
+                cur_url = cur_url.replace(/(category=)[^\&]+/, '$1' + selectedValue);
+            } else {
+                // Append the 'rating' parameter
+                cur_url += '&category=' + selectedValue;
+            }
+        } else {
+            // URL doesn't contain query parameters
+            // Add query parameters with the 'rating' parameter
+            cur_url += '?category=' + selectedValue;
+        }
+    
+        // Redirect to the modified URL
+        window.location.href = cur_url;
+    }
+
+
+
+    function filter_star() {
+        var selectedValue = document.querySelector('input[name="rating"]:checked').value;
+        var cur_url = window.location.href;
+        
+        // Check if the current URL already contains query parameters
+        if (cur_url.indexOf('?') !== -1) {
+            // URL already contains query parameters
+            // Check if the 'rating' parameter exists
+            if (cur_url.indexOf('rating=') !== -1) {
+                // Replace the value of the 'rating' parameter
+                cur_url = cur_url.replace(/(rating=)[^\&]+/, '$1' + selectedValue);
+            } else {
+                // Append the 'rating' parameter
+                cur_url += '&rating=' + selectedValue;
+            }
+        } else {
+            // URL doesn't contain query parameters
+            // Add query parameters with the 'rating' parameter
+            cur_url += '?rating=' + selectedValue;
+        }
+    
+        // Redirect to the modified URL
+        window.location.href = cur_url;
+    }
+        window.onload = function() {
+            var cur_url = window.location.href;
+            var rating = cur_url.indexOf('rating')
+            var category = cur_url.indexOf('category')
+            if (rating !== -1) {
+                var queryString = cur_url.substring(rating);
+                var ratingValue = queryString.split('=')[1].split('&')[0];
+                document.querySelector('input[id="rating-'+ ratingValue +'"]').checked = true
+            }
+            if (category !== -1) {
+                var queryString = cur_url.substring(category);
+                var categoryValue = queryString.split('=')[1].split('&')[0];
+                document.querySelector('input[id="category-'+ categoryValue +'"]').checked = true
+            }
+
+        };    
+  </script>
+{% endblock %}
+{% endblock content%}
+

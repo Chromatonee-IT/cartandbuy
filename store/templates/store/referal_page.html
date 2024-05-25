@@ -1,0 +1,145 @@
+{% extends "store/main.html" %}
+
+{% load static%}
+
+{% block content%}
+{% if cur_user %}
+
+		<main class="main">
+            <!-- Start of Breadcrumb -->
+            <nav class="breadcrumb-nav">
+                <div class="container">
+                    <ul class="breadcrumb">
+                        <li><a href="demo1.html">Home</a></li>
+                        <li>My account</li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- End of Breadcrumb -->
+
+            <!-- Start of PageContent -->
+            <div class="page-content pt-2">
+                <div class="container">
+                    <div class="icon-box icon-box-side icon-box-light d-flex">
+                        <span class="icon-box-icon icon-downloads mr-2">
+                            <i class="w-icon-money"></i>
+                        </span>
+                        <div class="icon-box-content">
+                            <h4 class="icon-box-title ls-normal">Refer & Earn</h4>
+                        </div>
+                    </div>
+                    <div class="tab tab-vertical row gutter-lg">
+                        <div class="link-item">
+                            <h4 style="margin-right:15px;" class="icon-box-title mb-0 ls-normal">Menu</h4>
+                            <div class="container">
+                                <button onclick="show_hide_menu();" class="hamburger-btn">&#9776;</button>
+                                <button style="display: none" onclick="show_hide_menu();" class="cross-btn">&#735;</button>
+                                <div style="display: none" class="menu-container">
+                                <div class="menu-content">
+                                    <ul>
+                                    <a href="{% url 'dashboard'%}"><li>Dashboard</li></a>
+                                    <a href="{% url 'orders'%}"><li>Orders</li></a>
+                                    <a href="{% url 'referal'%}"><li>Refer & Earn</li></a>
+                                    <a href="{% url 'address'%}"><li>Addresses</li></a>
+                                    <a href="{% url 'my_reviews'%}"><li>My reviews</li></a>
+                                    </ul>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content mb-6">
+                           <div class="tab-pane active in mb-4" id="account-referal">
+                                <div class="icon-box icon-box-side icon-box-light">
+                                    <span class="icon-box-icon icon-downloads mr-2">
+                                        <i class="w-icon-money"></i>
+                                    </span>
+                                    <div class="icon-box-content">
+                                        <h4 class="icon-box-title ls-normal">Refer & Earn</h4>
+                                    </div>
+                                </div>
+                                <p class="mb-2">You have been refered by: <strong style="color:green;">admin</strong></p>
+                                <p class="mb-2"><strong style="color:red;">**</strong> Invite your friends and family to Cart&Buy community</p>
+                                <form action="#" method="get" class="input-wrapper input-wrapper-inline input-wrapper-rounded">
+                                    <input class="form-control mb-4" id="share-link" type="refercode" value="{{cur_user.code}}" name="refercode" readonly >
+                                    <button onclick="copyToClipboard()" class="btn btn-primary btn-rounded mb-4">Copy Code
+									</button>
+                                </form>
+
+                                <button id="shareButton" class="btn btn-dark btn-rounded btn-icon-right">Share Link</button>
+                            </div>
+							{% if all_referals%}
+							<div class="card border mt-3">
+								<div class="card-header d-flex justify-content-between bg-transparent border-bottom-0">
+									<h6 class="mb-0 fw-bold ">My referrals</h6>
+								</div>
+								<div class="card-body">
+								{% for referal in all_referals%}
+									<p><small class="fw-bold"><span style="color:black;">{{forloop.counter}}.</span> {{referal.user.username}}</small></p>
+								{% endfor %}
+								</div>
+							</div>
+							{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of PageContent -->
+        </main>
+
+
+		<!--end page wrapper -->
+        <script>
+            function copyToClipboard() {
+                var copyText = document.getElementById("share-link");
+                copyText.select();
+                copyText.setSelectionRange(0, 99999); /* For mobile devices */
+                document.execCommand("copy");
+            }
+            function copylink() {
+                var urlParts = window.location.href.split('/');
+                var url = urlParts[0] + '//' + urlParts[2] + '/v_register/';
+                var copyText = document.getElementById("share-link");
+                var newurl = url + copyText.value
+                var tempTextArea = document.createElement("textarea");
+                tempTextArea.value = newurl;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempTextArea);
+                alert("Copied the link: " + newurl);
+            }
+        
+        </script>
+        <script>
+			const shareButton = document.getElementById('shareButton');
+			const code = "{{ request.user.buyer.code }}";
+			let url;
+			if (code) {
+				url = 'https://cartnbuy.in/register/' + '?referal=' + code;
+			} else {
+				url = 'https://cartnbuy.in/register/';
+			}
+
+			shareButton.addEventListener('click', () => {
+				if (navigator.share) {
+					shareViaWebShareAPI();
+				} else {
+					alert('This browser is not supported for sharing.');
+				}
+			});
+	
+			async function shareViaWebShareAPI() {
+				try {
+					await navigator.share({
+						title: 'cattnbuy',
+						text: 'Check out this product!',
+						url : url,
+					});
+				} catch (error) {
+					console.error('Error sharing:', error);
+				}
+			}
+		</script>
+{% endif %}
+{% endblock content%}

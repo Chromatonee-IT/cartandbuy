@@ -1,0 +1,85 @@
+{% extends "store/main.html" %}
+{% load static%}
+
+{% block content%}
+
+        <!-- Start of Main -->
+        <main class="main login-page">
+            <!-- End of Breadcrumb -->
+            <div class="page-content">
+                <div class="container">
+                    <div class="login-popup">
+                        <div class="tab tab-nav-boxed tab-nav-center tab-nav-underline">
+
+                            {% comment %} <div class="page-header"> {% endcomment %}
+                                <div class="container d-flex justify-content-center">
+                                    <h1 class="page-title mb-2">Login</h1>
+                                </div>
+
+                                <div class="text-center">
+                                    <p>Don't have an account yet? <a href="{% url 'register'%}">Sign up here</a>
+                                    </p>
+                                </div>
+                            {% comment %} </div> {% endcomment %}
+                                {% comment %} <li class="nav-item">
+                                    <a href="#sign-up" class="nav-link">Sign Up</a>
+                                </li> {% endcomment %}
+                                <div class="tab-pane active" id="sign-in">
+                                <form class="row g-3" action="" Method="POST">
+                                        {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Username or email address *</label>
+                                        <input type="text" class="form-control" name="username" id="username" required>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <label>Password *</label>
+                                        <input type="text" class="form-control" name="password" id="password" required>
+                                    </div>
+                                    <div class="form-checkbox d-flex align-items-center justify-content-between">
+                                        <input type="checkbox" class="custom-checkbox" id="remember1" name="remember1" required="">
+                                        <label for="remember1">Remember me</label>
+                                        <a href="{% url 'forgotpass'%}">Forgot password?</a>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Sign In</button>
+                                </div>
+                            </form>
+
+                            <p class="text-center">Sign in with social account</p>
+                            <div class="social-icons social-icon-border-color d-flex justify-content-center">
+                                <a href="#" class="social-icon social-google fab fa-google"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- End of Main -->
+<script type="text/javascript">
+   function hide_alert(){
+    document.getElementById("alert-box").style.display="None";
+   }
+   setTimeout(hide_alert,5000);
+   $(function() {
+    "use strict";
+  
+    $(document).ready(function () {
+      $("#show_hide_password a").on('click', function (event) {
+        event.preventDefault();
+        var passwordInput = $('#show_hide_password input');
+        if (passwordInput.attr("type") === "text") {
+          passwordInput.attr('type', 'password');
+          $(this).find('i').removeClass("fa-eye").addClass("fa-eye-slash");  // Assuming Font Awesome
+        } else {
+          passwordInput.attr('type', 'text');
+          $(this).find('i').removeClass("fa-eye-slash").addClass("fa-eye");  // Assuming Font Awesome
+        }
+      });
+    });
+  });
+  
+</script>
+<!--end shop cart-->
+{% endblock content%}
+
+
+

@@ -1,0 +1,1638 @@
+{% extends "store/main.html" %} {% load static%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+{% block content%}̉
+<!--start slider section-->
+<section style="margin-top:-20px" class="slider-section mb-3">
+  <div class="first-slider p-0">
+    <div class="banner-slider owl-carousel owl-theme">
+      {% for home_offer in home_offers%}
+      <div class="item">
+        <div class="position-relative">
+          <div class="position-absolute top-50 slider-content translate-middle">
+            <h3 class="dynamic-h3 fw-bold d-md-block">Trending Offers</h3>
+            <h1 class="dynamic-h1 fw-bold">{{home_offer.offer_title}}</h1>
+            <p class="fw-bold text-dark dynamic-font d-md-block">
+              <i>{{home_offer.offer_desc}}</i>
+            </p>
+            <div class="">
+              <a class="btn btn-sm btn-sm-dynamic btn-dark px-6" href="{{home_offer.offer_page}}"
+                >Shop Now</a
+              >
+            </div>
+          </div>
+          <a href="javascript:;">
+            <img
+              src="{{home_offer.offer_image.url}}"
+              class="img-fluid"
+              alt="offer-image"
+            />
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!--end slider section-->
+<!--start page wrapper -->
+<div class="page-wrapper">
+  <div class="page-content">
+    <!--start categories-->
+    <section class="">
+      <div class="container">
+        <div class="separator pb-3">
+          <div class="line"></div>
+          <h5 class="dynamic-h3 mb-0 fw-bold separator-title">Browse Catergory</h5>
+          <div class="line"></div>
+        </div>
+
+        <div class="product-grid">
+          <div class="browse-category owl-carousel owl-theme">
+            {% for category in categories %}
+            <div class="item">
+			  <a href="/all_category/{{category.classname}}/">
+              <div class="card rounded-0">
+                <div class="card-body p-0">
+                  <img
+                    src="{% if category.category_image %}{{category.category_image.url}}{% else%}{%endif%}"
+                    class="img-fluid"
+                    alt="category-image"
+                  />
+                </div>
+                <div
+                  style="
+                    height: 60px;
+                    display: flex;
+                    justify-content: center; 
+                    align-items: center;
+                  "
+                  class="card-footer text-center bg-transparent border"
+                >
+                  <h6 class="dynamic-font mt-2 fw-bold text-uppercase">
+                    {{category.classname}}
+                  </h6>
+                </div>
+              </div>
+			</a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--end categories-->
+    <!--start pramotion-->
+    <section class="py-4">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
+          <div class="col">
+            <div class="card rounded-0 shadow-none bg-info bg-opacity-25">
+              <div class="row g-0 align-items-center">
+                <div class="col">
+                  <img
+                    src="{% static 'images/promo/01.png'%}"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </div>
+                <div class="col">
+                  <div class="card-body">
+                    <h5 class="dynamic-h1 card-title text-uppercase fw-bold">Men Wear</h5>
+                    <p class="card-text text-uppercase">Starting at ₹199</p>
+                    <a
+                      href="javascript:;"
+                      class="btn btn-outline-dark btn-ecomm"
+                      >SHOP NOW</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card rounded-0 shadow-none bg-danger bg-opacity-25">
+              <div class="row g-0 align-items-center">
+                <div class="col">
+                  <img
+                    src="{% static 'images/promo/02.png'%}"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </div>
+                <div class="col">
+                  <div class="card-body">
+                    <h5 class="dynamic-h1 card-title text-uppercase fw-bold">
+                      Women Wear
+                    </h5>
+                    <p class="card-text text-uppercase">Starting at ₹199</p>
+                    <a
+                      href="javascript:;"
+                      class="btn btn-outline-dark btn-ecomm"
+                      >SHOP NOW</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card rounded-0 shadow-none bg-warning bg-opacity-25">
+              <div class="row g-0 align-items-center">
+                <div class="col">
+                  <img src="{% static 'images/promo/03.png'%}"
+                    class="img-fluid"
+                    alt="" />
+                </div>
+                <div class="col">
+                  <div class="card-body">
+                    <h5 class="dynamic-h1 card-title text-uppercase fw-bold">Kids Wear</h5>
+                    <p class="card-text text-uppercase">Starting at ₹199</p>
+                    <a
+                      href="javascript:;"
+                      class="btn btn-outline-dark btn-ecomm"
+                      >SHOP NOW</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end row-->
+      </div>
+    </section>
+    <!--end pramotion-->
+    <!--start Featured product-->
+    <section class="py-4">
+      <div class="container">
+        <div class="separator pb-4">
+          <div class="line"></div>
+          <h5 class="mb-0 fw-bold separator-title">FEATURED PRODUCTS</h5>
+          <div class="line"></div>
+        </div>
+        <div class="product-grid">
+          <div
+            class="row row-cols-3 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 g-3 g-sm-4"
+          >
+            {% for product in product_list%}
+            <div 
+               class="col">
+              <div class="card p-2 rounded border dynamic-height">
+                <div class="position-relative overflow-hidden">
+                  <div class=" position-absolute top-0 end-0">
+                    <a  href="/add_to_favourite/{{product.id}}/" ><i 
+                      {% if product.id in request.user.buyer.get_wishlist %}
+                      style="color:red !important;"
+                      {% endif %}
+                      style="color:black;" class="bx bxs-heart"></i></a>
+                    </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+					            style="font-size:10px;"
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct-{{forloop.counter}}"
+                      >Quick View</a
+                    >
+                  </div>
+                  <div class="d-flex justify-content-center">
+                  <a href="javascript:;">
+                    <img class="product-image mb-1" 
+                    {% if product.product_images.image1%}
+                    src="{{product.product_images.image1.url}}" 
+                    {% elif product.product_images.image2%}
+                    src="{{product.product_images.image2.url}}" 
+                    {% elif product.product_images.image3%}
+                    src="{{product.product_images.image3.url}}" 
+                    {% elif product.product_images.image4%}
+                    src="{{product.product_images.image4.url}}" 
+                    {% elif product.product_images.image5%}
+                    src="{{product.product_images.image5.url}}" 
+                    {% else %} 
+                    src="" 
+                    {% endif %} 
+                      class="img-fluid"
+                      alt="product-image"
+                    />
+                  </a>
+                </div>
+                </div>
+                <div style="padding:0px !important" class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-1"
+                  >
+                    <div class="">
+					          <a href="/all_category/{{product.itmclass.classname}}">
+                      <p style="font-size: 0rem" class="mb-1 dynamic-font product-short-name">
+                        {{product.itmclass|truncatewords:2}}
+                      </p>
+                    </a>
+					          <a href="{% url 'product_single' id=product.id %}">
+                      <h6 style="font-size: 0rem; height:40px" class="mb-0 fw-bold dynamic-font product-short-title">
+                        {{product.itmname|truncatechars:18}}
+                      </h6>
+                      </a>
+                    </div>
+                    <div  class="icon-wishlist">
+
+                    </div>
+                  </div>
+                  <div class="w-60 rates cursor-pointer" >
+                    <input style="margin:0px !important; padding:0px !important;"
+                      type="stars"
+                      class="rating container-fluid"
+                      readonly
+                      value="{{ product.average_rating }}"
+                      data-size="xs"
+                      data-stars="5"
+                    />
+                  </div>
+                  <div style="margin-top: -20px !important" class="ms-1">
+                    <p class="mb-0 dynamic-font">
+                      <strong>{{product.total_review}} Ratings </strong>
+                    </p>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                    <p class="mb-0 dynamic-font"> ₹{{product.itm_old_price}}</p>
+                    </div>
+                    <div class="h6 fw-bold"><p class="mb-0 dynamic-font">₹{{product.itm_new_price}}</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="QuickViewProduct-{{ forloop.counter }}">
+              <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-xl-down">
+                <div class="modal-content rounded-0 border-0">
+                  <div class="modal-body">
+                    <button
+                      type="button"
+                      class="btn-close float-end"
+                      data-bs-dismiss="modal"
+                    ></button>
+                    <div class="row g-0">
+                      <div class="col-12 col-lg-6 col-xm-6">
+                        <div class="image-zoom-section">
+                          <div
+                            class="product-gallery owl-carousel owl-theme border mb-3 p-3"
+                            data-slider-id="1"
+                          >
+                            {% if product.product_images.image1%}
+                            <div class="item image_style">
+                              <img
+                                src="{{product.product_images.image1.url}}"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </div>
+                            {% endif %} {% if product.product_images.image2%}
+                            <div class="item image_style">
+                              <img
+                                src="{{product.product_images.image2.url}}"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </div>
+                            {% endif %} {% if product.product_images.image3%}
+                            <div class="item">
+                              <img
+                                src="{{product.product_images.image3.url}}"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </div>
+                            {% endif %} {% if product.product_images.image4%}
+                            <div class="item">
+                              <img
+                                src="{{product.product_images.image4.url}}"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </div>
+                            {% endif %} {% if product.product_images.image5%}
+                            <div class="item">
+                              <img
+                                src="{{product.product_images.image5.url}}"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </div>
+                            {% endif %}
+                          </div>
+                          <div
+                            class="owl-thumbs d-flex justify-content-center"
+                            data-slider-id="1"
+                          >
+                            {% if product.product_images.image1%}
+                            <button class="owl-thumb-item">
+                              <img
+                                src="{{product.product_images.image1.url}}"
+                                class=""
+                                alt=""
+                              />
+                            </button>
+                            {% endif %} {% if product.product_images.image2%}
+                            <button class="owl-thumb-item">
+                              <img
+                                src="{{product.product_images.image2.url}}"
+                                class=""
+                                alt=""
+                              />
+                            </button>
+                            {% endif %} {% if product.product_images.image3%}
+                            <button class="owl-thumb-item">
+                              <img
+                                src="{{product.product_images.image3.url}}"
+                                class=""
+                                alt=""
+                              />
+                            </button>
+                            {% endif %} {% if product.product_images.image4%}
+                            <button class="owl-thumb-item">
+                              <img
+                                src="{{product.product_images.image4.url}}"
+                                class=""
+                                alt=""
+                              />
+                            </button>
+                            {% endif %} {% if product.product_images.image5%}
+                            <button class="owl-thumb-item">
+                              <img
+                                src="{{product.product_images.image5.url}}"
+                                class=""
+                                alt=""
+                              />
+                            </button>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="product-info-section p-3">
+                          <h3 class="mt-3 mt-lg-0 mb-0">{{product.itmname}}</h3>
+                          <div
+                            class="product-rating d-flex align-items-center mt-2"
+                          >
+                            <div
+                              class="rates cursor-pointer"
+                              style="margin-top: 1.3rem"
+                            >
+                              <input
+                                type="stars"
+                                class="rating container-fluid"
+                                readonly
+                                value="{{ product.average_rating }}"
+                                data-size="xs"
+                                data-stars="5"
+                              />
+                            </div>
+                            <div class="ms-1">
+                              <p class="mb-0">
+                                <strong
+                                  >{{product.total_review}}Ratings</strong
+                                >
+                              </p>
+                            </div>
+                          </div>
+                          <div class="d-flex align-items-center mt-3 gap-2">
+                            <h5
+                              class="mb-0 text-decoration-line-through text-light-3"
+                            >
+                              ₹{{product.itm_old_price}}
+                            </h5>
+                            <h4 class="mb-0">₹{{product.itm_new_price}}</h4>
+                          </div>
+                          <div class="mt-3">
+                            <h6>Discription :</h6>
+                            <p class="mb-0">
+                              {{product.itmdesc|truncatewords:35}}
+                            </p>
+                          </div>
+                          {% comment %} <div
+                            class="row row-cols-auto align-items-center mt-3"
+                          >
+                            {% if product.get_sizes%}
+                            <div class="col mt-1">
+                              <label class="form-label">Sizes</label>
+                              <select class="form-select form-select-sm">
+                                {% for size_ins in product.get_sizes%}
+                                <option>
+                                  {{size_ins.product_size | upper}}
+                                </option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                            {% endif %} 
+                            {% if product.get_variants%}
+                            <div class="col">
+                              <label class="form-label">Colors</label>
+                              <div
+                                class="color-indigators d-flex align-items-center gap-2"
+                              >
+                                {% for variants in product.get_variants%}
+                                <div
+                                  style="background-color:{{variants.color_code}}"
+                                  class="color-indigator-item border"
+                                ></div>
+                                {% endfor %}
+                              </div>
+                            </div>
+                            {% endif %}
+                          </div> {% endcomment %}
+                          <!--end row-->
+            </div>
+						<div class="container p-3">
+						<div class="product-action mt-2">
+							<div class="d-flex gap-2">
+								<a href="{% url 'product_single' id=product.id %}" class="btn btn-dark btn-ecomm"> <i class="bx bx-show"></i>View</a>
+							</div>
+						</div>
+						</div>
+                      </div>
+                    </div>
+                    <!--end row-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end quick view product-->
+            {% endfor %} {% comment %}
+            <div class="col">
+              <div class="card">
+                <div class="position-relative overflow-hidden">
+                  <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                  </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+                      href="javascript:;"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct"
+                      >Quick View</a
+                    >
+                  </div>
+                  <a href="javascript:;">
+                    <img
+                      src="assets/images/products/02.png"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                <div class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="">
+                      <p class="mb-1 product-short-name">Topwear</p>
+                      <h6 class="mb-0 fw-bold product-short-title">
+                        White Polo Shirt
+                      </h6>
+                    </div>
+                    <div class="icon-wishlist">
+                      <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="cursor-pointer rating mt-2">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2 mt-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                      ₹59.00
+                    </div>
+                    <div class="h6 fw-bold">₹48.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="position-relative overflow-hidden">
+                  <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                  </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+                      href="javascript:;"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct"
+                      >Quick View</a
+                    >
+                  </div>
+                  <a href="javascript:;">
+                    <img
+                      src="assets/images/products/03.png"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                <div class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="">
+                      <p class="mb-1 product-short-name">Topwear</p>
+                      <h6 class="mb-0 fw-bold product-short-title">
+                        White Polo Shirt
+                      </h6>
+                    </div>
+                    <div class="icon-wishlist">
+                      <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="cursor-pointer rating mt-2">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2 mt-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                      ₹59.00
+                    </div>
+                    <div class="h6 fw-bold">₹48.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="position-relative overflow-hidden">
+                  <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                  </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+                      href="javascript:;"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct"
+                      >Quick View</a
+                    >
+                  </div>
+                  <a href="javascript:;">
+                    <img
+                      src="assets/images/products/04.png"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                <div class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="">
+                      <p class="mb-1 product-short-name">Topwear</p>
+                      <h6 class="mb-0 fw-bold product-short-title">
+                        White Polo Shirt
+                      </h6>
+                    </div>
+                    <div class="icon-wishlist">
+                      <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="cursor-pointer rating mt-2">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2 mt-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                      ₹59.00
+                    </div>
+                    <div class="h6 fw-bold">₹48.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="position-relative overflow-hidden">
+                  <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                  </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+                      href="javascript:;"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct"
+                      >Quick View</a
+                    >
+                  </div>
+                  <a href="javascript:;">
+                    <img
+                      src="assets/images/products/05.png"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                <div class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="">
+                      <p class="mb-1 product-short-name">Topwear</p>
+                      <h6 class="mb-0 fw-bold product-short-title">
+                        White Polo Shirt
+                      </h6>
+                    </div>
+                    <div class="icon-wishlist">
+                      <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="cursor-pointer rating mt-2">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2 mt-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                      ₹59.00
+                    </div>
+                    <div class="h6 fw-bold">₹48.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="position-relative overflow-hidden">
+                  <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                  </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+                      href="javascript:;"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct"
+                      >Quick View</a
+                    >
+                  </div>
+                  <a href="javascript:;">
+                    <img
+                      src="assets/images/products/06.png"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                <div class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="">
+                      <p class="mb-1 product-short-name">Topwear</p>
+                      <h6 class="mb-0 fw-bold product-short-title">
+                        White Polo Shirt
+                      </h6>
+                    </div>
+                    <div class="icon-wishlist">
+                      <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="cursor-pointer rating mt-2">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2 mt-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                      ₹59.00
+                    </div>
+                    <div class="h6 fw-bold">₹48.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="position-relative overflow-hidden">
+                  <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                  </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+                      href="javascript:;"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct"
+                      >Quick View</a
+                    >
+                  </div>
+                  <a href="javascript:;">
+                    <img
+                      src="assets/images/products/07.png"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                <div class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="">
+                      <p class="mb-1 product-short-name">Topwear</p>
+                      <h6 class="mb-0 fw-bold product-short-title">
+                        White Polo Shirt
+                      </h6>
+                    </div>
+                    <div class="icon-wishlist">
+                      <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="cursor-pointer rating mt-2">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2 mt-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                      ₹59.00
+                    </div>
+                    <div class="h6 fw-bold">₹48.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="position-relative overflow-hidden">
+                  <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                  </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+                      href="javascript:;"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct"
+                      >Quick View</a
+                    >
+                  </div>
+                  <a href="javascript:;">
+                    <img
+                      src="assets/images/products/08.png"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                <div class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="">
+                      <p class="mb-1 product-short-name">Topwear</p>
+                      <h6 class="mb-0 fw-bold product-short-title">
+                        White Polo Shirt
+                      </h6>
+                    </div>
+                    <div class="icon-wishlist">
+                      <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="cursor-pointer rating mt-2">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2 mt-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                      ₹59.00
+                    </div>
+                    <div class="h6 fw-bold">₹48.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="position-relative overflow-hidden">
+                  <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                  </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+                      href="javascript:;"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct"
+                      >Quick View</a
+                    >
+                  </div>
+                  <a href="javascript:;">
+                    <img
+                      src="assets/images/products/09.png"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                <div class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="">
+                      <p class="mb-1 product-short-name">Topwear</p>
+                      <h6 class="mb-0 fw-bold product-short-title">
+                        White Polo Shirt
+                      </h6>
+                    </div>
+                    <div class="icon-wishlist">
+                      <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="cursor-pointer rating mt-2">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2 mt-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                      ₹59.00
+                    </div>
+                    <div class="h6 fw-bold">₹48.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="position-relative overflow-hidden">
+                  <div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+                    <a href="javascript:;"><i class="bx bx-cart-add"></i></a>
+                  </div>
+                  <div
+                    class="quick-view position-absolute start-0 bottom-0 end-0"
+                  >
+                    <a
+                      href="javascript:;"
+                      data-bs-toggle="modal"
+                      data-bs-target="#QuickViewProduct"
+                      >Quick View</a
+                    >
+                  </div>
+                  <a href="javascript:;">
+                    <img
+                      src="assets/images/products/10.png"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                <div class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="">
+                      <p class="mb-1 product-short-name">Topwear</p>
+                      <h6 class="mb-0 fw-bold product-short-title">
+                        White Polo Shirt
+                      </h6>
+                    </div>
+                    <div class="icon-wishlist">
+                      <a href="javascript:;"><i class="bx bx-heart"></i></a>
+                    </div>
+                  </div>
+                  <div class="cursor-pointer rating mt-2">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2 mt-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                      ₹59.00
+                    </div>
+                    <div class="h6 fw-bold">₹48.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endcomment %}
+          </div>
+          <!--end row-->
+        </div>
+      </div>
+    </section>
+    <!--end Featured product-->
+    <!--start New Arrivals-->
+    <section class="py-4">
+      <div class="container">
+        <div class="separator pb-4">
+          <div class="line"></div>
+          <h5 class="mb-0 fw-bold separator-title">New Arrivals</h5>
+          <div class="line"></div>
+        </div>
+        <div class="product-grid">
+          <div class="new-arrivals owl-carousel owl-theme position-relative">
+
+			{% for product in new_arrival %}
+            <div class="item">
+              <div class="card p-2 rounded border  dynamic-height">
+                <div class="position-relative overflow-hidden">
+                  <div class=" position-absolute top-0 end-0 mt-3 me-3">
+                    <a  href="/add_to_favourite/{{product.id}}/" ><i {% for item in wishlist_items %} {% if item.product.pk == product.pk %} style="color:red !important;" {% endif %} {% endfor %} style="color:black;" class="bx bxs-heart"></i></a>
+                    </div>
+                  <div class="d-flex justify-content-center">
+                  <a href="{% url 'product_single' id=product.id %}">
+                    <img class=" mb-1" 
+                    {% if product.product_images.image1%}
+                    src="{{product.product_images.image1.url}}" 
+                    {% elif product.product_images.image2%}
+                    src="{{product.product_images.image2.url}}" 
+                    {% elif product.product_images.image3%}
+                    src="{{product.product_images.image3.url}}" 
+                    {% elif product.product_images.image4%}
+                    src="{{product.product_images.image4.url}}" 
+                    {% elif product.product_images.image5%}
+                    src="{{product.product_images.image5.url}}" 
+                    {% else %} 
+                    src="" 
+                    {% endif %} 
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </a>
+                </div>
+                </div>
+                <div style="padding:0px !important" class="card-body px-0">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-1"
+                  >
+                    <div class="">
+					          <a href="{% url 'product_single' id=product.id %}">
+                      <p style="font-size: 0rem" class="mb-1 dynamic-font product-short-name">
+                        {{product.itmclass|truncatewords:2}}
+                      </p>
+                      <h6 style="font-size: 0rem" class="mb-0 fw-bold dynamic-font product-short-title">
+                        {{product.itmname|truncatechars:18}}
+                      </h6>
+                      </a>
+                    </div>
+                    <div  class="icon-wishlist">
+
+                    </div>
+                  </div>
+                  <div class="w-60 rates cursor-pointer" >
+                    <input style="margin:0px !important; padding:0px !important;"
+                      type="stars"
+                      class="rating container-fluid"
+                      readonly
+                      value="{{ product.average_rating }}"
+                      data-size="xs"
+                      data-stars="5"
+                    />
+                  </div>
+                  <div style="margin-top: -20px !important" class="ms-1">
+                    <p class="mb-0 dynamic-font">
+                      <strong>{{product.total_review}} Ratings </strong>
+                    </p>
+                  </div>
+                  <div
+                    class="product-price d-flex align-items-center justify-content-start gap-2"
+                  >
+                    <div
+                      class="h6 fw-light fw-bold text-secondary text-decoration-line-through"
+                    >
+                    <p class="mb-0 dynamic-font"> ₹{{product.itm_old_price}}</p>
+                    </div>
+                    <div class="h6 fw-bold"><p class="mb-0 dynamic-font">₹{{product.itm_new_price}}</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+			{% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--end New Arrivals-->
+    <!--start Advertise banners-->
+    <section class="py-4 bg-dark">
+      <div class="container">
+        <div class="add-banner">
+          <div
+            class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 g-4"
+          >
+            <div class="col d-flex">
+              <div class="card rounded-0 w-100 border-0 shadow-none">
+                <img
+                  src="{% static 'images/promo/04.png'%}"
+                  class="img-fluid"
+                  alt="..."
+                />
+                <div class="position-absolute top-0 end-0 m-3 product-discount">
+                  <span class="">-10%</span>
+                </div>
+                <div class="card-body text-center">
+                  <h5 class="card-title">Sunglasses Sale</h5>
+                  <p class="card-text">
+                    See all Sunglasses and get 10% off at all Sunglasses
+                  </p>
+                  <a href="javascript:;" class="btn btn-dark btn-ecomm"
+                    >SHOP BY GLASSES</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col d-flex">
+              <div class="card rounded-0 w-100 border-0 shadow-none">
+                <img
+                  src="{% static 'images/promo/08.png'%}"
+                  class="img-fluid"
+                  alt="..."
+                />
+                <div class="position-absolute top-0 end-0 m-3 product-discount">
+                  <span class="">-80%</span>
+                </div>
+                <div class="card-body text-center">
+                  <h5 class="card-title">Cosmetics Sales</h5>
+                  <p class="card-text">
+                    Buy Cosmetics products and get 30% off at all Cosmetics
+                  </p>
+                  <a href="javascript:;" class="btn btn-dark btn-ecomm"
+                    >SHOP BY COSMETICS</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col d-flex">
+              <div class="card rounded-0 w-100 border-0 shadow-none">
+                <img
+                  src="{% static 'images/promo/06.png'%}"
+                  class="img-fluid h-100"
+                  alt="..."
+                />
+                <div class="card-img-overlay text-center top-20">
+                  <div class="border border-white border-2 py-3 bg-dark-3">
+                    <h5 class="card-title text-white">Fashion Summer Sale</h5>
+                    <p
+                      class="card-text text-uppercase fs-1 lh-1 mt-3 mb-2 text-white"
+                    >
+                      Up to 80% off
+                    </p>
+                    <p class="card-text fs-5 text-white">
+                      On Top Fashion Brands
+                    </p>
+                    <a href="javascript:;" class="btn btn-white btn-ecomm"
+                      >SHOP BY FASHION</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col d-flex">
+              <div class="card rounded-0 w-100 border-0 shadow-none">
+                <div class="position-absolute top-0 end-0 m-3 product-discount">
+                  <span class="">-50%</span>
+                </div>
+                <img
+                  src="{% static 'images/promo/07.png'%}"
+                  class="img-fluid"
+                  alt="..."
+                />
+                <div class="card-body text-center">
+                  <h5 class="card-title fs-2 fw-bold text-uppercase">
+                    Super Sale
+                  </h5>
+                  <p class="card-text text-uppercase fs-5 lh-1 mb-2">
+                    Up to 50% off
+                  </p>
+                  <p class="card-text">On All Electronic</p>
+                  <a href="javascript:;" class="btn btn-dark btn-ecomm"
+                    >HURRY UP!</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end row-->
+        </div>
+      </div>
+    </section>
+    <!--end Advertise banners-->
+
+    <!--start support info-->
+    <section class="py-5 bg-light">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+          <div class="col">
+            <div class="text-center border p-3 bg-white" style="height: 25vh">
+              <div class="font-50 text-dark">
+                <i class="bx bx-cart-add"></i>
+              </div>
+              <h5 class="fs-5 text-uppercase mb-0 fw-bold">Free delivery</h5>
+              <p class="text-capitalize">Free delivery over ₹199</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center border p-3 bg-white" style="height: 25vh">
+              <div class="font-50 text-dark">
+                <i class="bx bx-credit-card"></i>
+              </div>
+              <h5 class="fs-5 text-uppercase mb-0 fw-bold">Secure payment</h5>
+              <p class="text-capitalize">We possess SSL / Secure сertificate</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center border p-3 bg-white" style="height: 25vh">
+              <div class="font-50 text-dark">
+                <i class="bx bx-dollar-circle"></i>
+              </div>
+              <h5 class="fs-5 text-uppercase mb-0 fw-bold">Free returns</h5>
+              <p class="text-capitalize">We return money within 30 days</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center border p-3 bg-white" style="height: 25vh">
+              <div class="font-50 text-dark"><i class="bx bx-support"></i></div>
+              <h5 class="fs-5 text-uppercase mb-0 fw-bold">Customer Support</h5>
+              <p class="text-capitalize">Friendly 24/7 customer support</p>
+            </div>
+          </div>
+        </div>
+        <!--end row-->
+      </div>
+    </section>
+    <!--end support info-->
+    <!--start bottom products section-->
+    {% comment %} <section class="py-4 border-top">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+          <div class="col">
+            <div class="bestseller-list mb-3">
+              <h6 class="mb-3 text-uppercase fw-bold">Best Selling Products</h6>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/01.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Men Casual Shirts</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/02.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Formal Coat Pant</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/03.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Women Blue Jeans</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/04.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Yellow Track Suit</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="featured-list mb-3">
+              <h6 class="mb-3 text-uppercase fw-bold">Featured Products</h6>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/05.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Men Sports Shoes</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/06.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Black Sofa Set</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/07.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Sports Watch</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/08.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Women Blue Heels</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="new-arrivals-list mb-3">
+              <h6 class="mb-3 text-uppercase fw-bold">New arrivals</h6>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="jproduct-details.html">
+                    <img
+                      src="assets/images/products/09.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Men Black Cap</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/10.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Orange Headphone</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/11.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Samsung Mobile</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/12.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Apple Notebook</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="top-rated-products-list mb-3">
+              <h6 class="mb-3 text-uppercase fw-bold">Top rated Products</h6>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/13.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Ronaldo Football</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/14.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Red Fancy Sofa</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/15.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Sports Cycle</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+              <hr />
+              <div class="d-flex align-items-center gap-3">
+                <div class="bottom-product-img">
+                  <a href="product-details.html">
+                    <img
+                      src="assets/images/products/16.png"
+                      width="80"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="ms-0">
+                  <h6 class="mb-0 fw-light mb-1 fw-bold">Circular Table</h6>
+                  <div class="rating">
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                    <i class="bx bxs-star text-warning"></i>
+                  </div>
+                  <p class="mb-0 pro-price"><strong>₹59.00</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--end row-->
+      </div>
+    </section> {% endcomment %}
+    <!--end bottom products section-->
+  </div>
+</div>
+<!--end page wrapper -->
+{% endblock content%}

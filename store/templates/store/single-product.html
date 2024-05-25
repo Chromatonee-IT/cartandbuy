@@ -1,0 +1,1262 @@
+{% extends "store/main.html" %}
+
+{% load static%}
+{% load discount_calculate %}
+
+
+{% block content%}
+
+
+<div class="d-flex justify-content-center">
+    {% if messages%}{% for message in messages%}
+    <div class="alert {{message.tags}} fade show" id="alert-box">
+        <div class="d-flex align-items-center">
+            <i style="padding-right:5px;" class='bx bx-info-circle fs-5 m-2'></i>
+        {{message}}
+        {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+</div>
+
+
+<main class="main mb-10 pb-1">
+    <!-- Start of Breadcrumb -->
+    <nav class="breadcrumb-nav container">
+        <ul class="breadcrumb bb-no">
+            <li><a href="/">Home</a></li>
+            <li>Products</li>
+        </ul>
+    </nav>
+    <!-- End of Breadcrumb -->
+
+    <!-- Start of Page Content -->
+    <div class="page-content">
+        <div class="container">
+            <div class="container">
+                <div class="main-content">
+                <input type="hidden" id="product_id" name="variable" value="{{ product.id }}">
+                <div class="d-flex">
+                <div class="container">
+                    <div class="product product-single row ">
+                        <div class="col-md-6 mb-6">
+                            <div class="product-gallery product-gallery-sticky">
+                                <div class="swiper-container product-single-swiper swiper-theme nav-inner" data-swiper-options="{
+                                    'navigation': {
+                                        'nextEl': '.swiper-button-next',
+                                        'prevEl': '.swiper-button-prev'
+                                    }
+                                }">
+                                    <div class="swiper-wrapper row cols-1 gutter-no">
+
+                                        {% if product.product_images.image1%}
+                                        <div class="swiper-slide">
+                                            <figure class="product-image">
+                                                <img src="{{product.product_images.image1.url}}"
+                                                    data-zoom-image="{{product.product_images.image1.url}}"
+                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
+                                            </figure>
+                                        </div>
+                                        {% endif %}
+                                        {% if product.product_images.image2%}
+                                        <div class="swiper-slide">
+                                            <figure class="product-image">
+                                                <img src="{{product.product_images.image2.url}}"
+                                                    data-zoom-image="{{product.product_images.image2.url}}"
+                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
+                                            </figure>
+                                        </div>
+                                        {% endif %}
+                                        {% if product.product_images.image3%}
+                                        <div class="swiper-slide">
+                                            <figure class="product-image">
+                                                <img src="{{product.product_images.image3.url}}"
+                                                    data-zoom-image="{{product.product_images.image3.url}}"
+                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
+                                            </figure>
+                                        </div>
+                                        {% endif %}
+                                        {% if product.product_images.image4%}
+                                        <div class="swiper-slide">
+                                            <figure class="product-image">
+                                                <img src="{{product.product_images.image4.url}}"
+                                                    data-zoom-image="{{product.product_images.image4.url}}"
+                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
+                                            </figure>
+                                        </div>
+                                        {% endif %}
+                                        {% if product.product_images.image5%}
+                                        <div class="swiper-slide">
+                                            <figure class="product-image">
+                                                <img src="{{product.product_images.image5.url}}"
+                                                    data-zoom-image="{{product.product_images.image5.url}}"
+                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
+                                            </figure>
+                                        </div>
+                                        {% endif %}
+
+
+                                    </div>
+                                    <button class="swiper-button-next"></button>
+                                    <button class="swiper-button-prev"></button>
+                                    {% comment %} <a href="#" class="product-gallery-btn product-image-full"><i class="w-icon-zoom"></i></a> {% endcomment %}
+                                </div>
+                                <div class="product-thumbs-wrap swiper-container" data-swiper-options="{
+                                    'navigation': {
+                                        'nextEl': '.swiper-button-next',
+                                        'prevEl': '.swiper-button-prev'
+                                    }
+                                }">
+                                    <div class="product-thumbs swiper-wrapper row cols-4 gutter-sm">
+                                    {% if product.product_images.image1%}
+                                        <div class="product-thumb swiper-slide">
+                                            <img src="{{product.product_images.image1.url}}"
+                                            id="product-thumb" alt="Product Thumb" width="800" height="900">
+                                        </div>
+                                    {% endif %}
+                                    {% if product.product_images.image2%}
+                                        <div class="product-thumb swiper-slide">
+                                            <img src="{{product.product_images.image2.url}}"
+                                            id="product-thumb"  alt="Product Thumb" width="800" height="900">
+                                        </div>
+                                    {% endif %}
+                                    {% if product.product_images.image3%}
+                                        <div class="product-thumb swiper-slide">
+                                            <img src="{{product.product_images.image3.url}}"
+                                            id="product-thumb"  alt="Product Thumb" width="800" height="900">
+                                        </div>
+                                    {% endif %}
+                                    {% if product.product_images.image4%}
+                                        <div class="product-thumb swiper-slide">
+                                            <img src="{{product.product_images.image4.url}}"
+                                            id="product-thumb"  alt="Product Thumb" width="800" height="900">
+                                        </div>
+                                    {% endif %}
+                                    {% if product.product_images.image5%}
+                                        <div class="product-thumb swiper-slide">
+                                            <img src="{{product.product_images.image5.url}}"
+                                            id="product-thumb"  alt="Product Thumb" width="800" height="900">
+                                        </div>
+                                    {% endif %}
+
+                                    </div>
+                                    <button class="swiper-button-next"></button>
+                                    <button class="swiper-button-prev"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4 mb-md-6">
+                            <div class="product-details" data-sticky-options="{'minWidth': 767}">
+                                <h1 id="product-title" class="product-title">{{product.itmname}}</h1>
+                                <div class="product-bm-wrapper">
+                                    <figure class="brand">
+                                        <img src="{% static 'assets/images/products/brand/brand-1.jpg'%}" alt="Brand"
+                                            width="102" height="48" />
+                                    </figure>
+                                    <div class="product-meta">
+                                        <div class="product-categories">
+                                            Category:
+                                            <span class="product-category"><a href="/all_category/{{product.itmclass}}/">{{product.itmclass}}</a></span>
+                                        </div>
+                                        <div class="product-sku">
+                                            SKU: <span>MS46891340</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="product-divider">
+                                <div class="d-flex gap-3 align-items-center">
+                                    <div style="margin-right:5px;" class="product-price"><del style="color:#f77c29" class="price-old">₹{{product.itm_old_price}}</del></div>
+                                    <div class="product-price"><ins class="new-price"> ₹{{product.itm_new_price}}</ins></div>
+                                </div>
+                                <div class="ratings-container">
+                                    <div class="ratings-full">
+                                        <span id="ratings" class="ratings" style="width:{{product.average_rating|multiply_by_20}}%;"></span>
+                                        <span class="tooltiptext tooltip-top"></span>
+                                    </div>
+                                    <a href="#product-tab-reviews" class="rating-reviews">({{product.total_review}} Reviews)</a>
+                                </div>
+
+                                {% if discount_coupon%}
+                                <div class="product-short-desc mt-4">
+                                    <h4>Available offers</h4>
+                                    <ul class=" list-style-none">
+										{% for coupon in discount_coupon%}
+                                        <div class="d-flex">
+                                        <i class="bx bx-purchase-tag" style="color:green; margin-right:5px;"></i><li>{{coupon}}</li> <li style="margin-left:5px;">(Extra discout of {% if coupon.offer_cat.id == 1%}₹{{coupon.discount_value}}{% endif %} {% if coupon.offer_cat.id == 2%}({{coupon.discount_value}}%) {% endif %} on this product.)</li>
+                                        </div>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                <hr class="product-divider">
+
+                                {% if product.get_variants%}
+                                <div class="product-form product-variation-form product-color-swatch">
+                                    <label>Color:</label>
+                                    <div class="d-flex align-items-center product-variations">
+
+                                        {% for variants in product.get_variants%}
+
+                                        <button onclick="color_active('{{variants.varient_name}}')" id="{{variants.varient_name}}" class="color" style="background-color: {{variants.color_code}}"></button>
+
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if size_ins%}
+                                <div class="product-form product-variation-form product-size-swatch">
+                                    <label class="mb-1">Size:</label>
+                                    <div class="flex-wrap d-flex align-items-center product-variations">
+                                        {% for size_ins in size_ins%}
+                                        <a onclick="size_active({{size_ins.pk}});" id="{{size_ins.pk}}" class="size">{{size_ins.product_size | upper}}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="product-variant-price">
+                                    <span></span>
+                                </div>
+
+                                <div class="fix-bottom product-sticky-content sticky-content">
+                                    <div class="product-form container">
+                                        <div class="product-qty-form mb-2 mr-2 justify-content-center">
+                                            <div class="qty-input ">
+                                                <button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
+                                                <input id="count" style="color:black" class="product-qty" type="number" name="product-qty-{{cart_item.pk}}" min="1" max="100" value="1">
+                                                <button class="qty-count qty-count--add" data-action="add" type="button">+</button>
+                                            </div>
+                                        </div>
+                                        {% comment %} <a href="/add_to_cart/{{product.id}}/?color={{selected_color}}" class="btn btn-primary ">
+                                            <i class="w-icon-cart"></i>
+                                            <span>Add to Cart</span>
+                                        </a>  {% endcomment %}
+                                        <a href="#" id="addtocart" class="btn btn-primary btn-cart">
+                                            <i class="w-icon-cart"></i>
+                                            <span>Add to Cart</span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="social-links-wrapper">
+                                    <div class="social-links">
+                                        <div class="social-icons social-no-color border-thin">
+                                            <a href="#" class="social-icon social-facebook w-icon-facebook"></a>
+                                            <a href="#" class="social-icon social-twitter w-icon-twitter"></a>
+                                            <a href="#"
+                                                class="social-icon social-pinterest fab fa-pinterest-p"></a>
+                                            <a href="#" class="social-icon social-whatsapp fab fa-whatsapp"></a>
+                                            <a type="button" id="shareButton"
+                                                class="social-icon social-youtube"><i class='bx bx-share-alt'></i></a>
+                                        </div>
+                                    </div>
+                                    <span class="divider d-xs-show"></span>
+                                    <div class="product-link-wrapper d-flex">
+                                    {% if cur_user %}
+                                        <a id="product-{{product.id}}"
+
+                                        {% if product.id in request.user.buyer.get_wishlist %} style="color:red;"
+                                        {% else %}
+                                        style="color:grey;"
+                                        {% endif %}
+
+                                        {% if product.id in request.user.buyer.get_wishlist %}
+                                        onclick="remove_from_wishlist({{product.id}})"
+                                        {% elif product.id not in request.user.buyer.get_wishlist %}
+                                        onclick="add_to_wishlist({{product.id}})"
+                                        {% endif %}
+
+                                        class="btn-product-icon btn-wishlist
+
+                                         {% if product.id in request.user.buyer.get_wishlist %} w-icon-heart-full
+                                         {% elif product.id not in request.user.buyer.get_wishlist %}
+                                         w-icon-heart
+                                         {% endif %}
+
+                                         "></a>
+                                    {% else %}
+
+                                    <a href="#"
+                                    class="btn-product-icon btn-wishlist w-icon-heart "></a>
+
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                    {% comment %} <div class="frequently-bought-together mt-5">
+                        <h2 class="title title-underline">Frequently Bought Together</h2>
+                        <div class="bought-together-products row mt-8 pb-4">
+                            <div class="product product-wrap text-center">
+                                <figure class="product-media">
+                                    <img src="{% static 'assets/images/products/default/bought-1.jpg'%}" alt="Product"
+                                        width="138" height="138" />
+                                    <div class="product-checkbox">
+                                        <input type="checkbox" class="custom-checkbox" id="product_check1"
+                                            name="product_check1">
+                                        <label></label>
+                                    </div>
+                                </figure>
+                                <div class="product-details">
+                                    <h4 class="product-name">
+                                        <a href="#">Electronics Black Wrist Watch</a>
+                                    </h4>
+                                    <div class="product-price">$40.00</div>
+                                </div>
+                            </div>
+                            <div class="product product-wrap text-center">
+                                <figure class="product-media">
+                                    <img src="{% static 'assets/images/products/default/bought-2.jpg'%}" alt="Product"
+                                        width="138" height="138" />
+                                    <div class="product-checkbox">
+                                        <input type="checkbox" class="custom-checkbox" id="product_check2"
+                                            name="product_check2">
+                                        <label></label>
+                                    </div>
+                                </figure>
+                                <div class="product-details">
+                                    <h4 class="product-name">
+                                        <a href="#">Apple Laptop</a>
+                                    </h4>
+                                    <div class="product-price">$1,800.00</div>
+                                </div>
+                            </div>
+                            <div class="product product-wrap text-center">
+                                <figure class="product-media">
+                                    <img src="assets/images/products/default/bought-3.jpg" alt="Product"
+                                        width="138" height="138" />
+                                    <div class="product-checkbox">
+                                        <input type="checkbox" class="custom-checkbox" id="product_check3"
+                                            name="product_check3">
+                                        <label></label>
+                                    </div>
+                                </figure>
+                                <div class="product-details">
+                                    <h4 class="product-name">
+                                        <a href="#">White Lenovo Headphone</a>
+                                    </h4>
+                                    <div class="product-price">$34.00</div>
+                                </div>
+                            </div>
+                            <div class="product-button">
+                                <div class="bought-price font-weight-bolder text-primary ls-50">$1,874.00</div>
+                                <div class="bought-count">For 3 items</div>
+                                <a href="cart.html" class="btn btn-dark btn-rounded">Add All To Cart</a>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                    <div class="tab tab-nav-boxed tab-nav-underline product-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a href="#product-tab-description" class="nav-link active">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#product-tab-specification" class="nav-link">Specification</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#product-tab-vendor" class="nav-link">Vendor Info</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#product-tab-reviews" class="nav-link">Customer Reviews ({{product.total_review}})</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="product-tab-description">
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mb-5">
+                                        <h4 class="title tab-pane-title font-weight-bold mb-2">Detail</h4>
+                                        <p class="mb-4">{{product.itmdesc}}</p>
+                                        {% comment %} <ul class="list-type-check">
+                                            <li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis
+                                                elit.
+                                            </li>
+                                            <li>Vivamus finibus vel mauris ut vehicula.</li>
+                                            <li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.
+                                            </li>
+                                        </ul> {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="row cols-md-3">
+
+                                {% for coupon in discount_coupon%}
+                                {% if coupon.offer_cat.id == 3%}
+                                    <div class="mb-3">
+                                        <h5 class="sub-title font-weight-bold"><span class="mr-3">1.</span>Free
+                                            Shipping &amp; Return</h5>{{coupon.offer_cat}}
+                                        <p class="detail pl-5">We offer free shipping for products on orders
+                                            above 50$ and offer free delivery for all orders in US.</p>
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+
+                                    {% comment %} <div class="mb-3">
+                                        <h5 class="sub-title font-weight-bold"><span>2.</span>Free and Easy
+                                            Returns</h5>
+                                        <p class="detail pl-5">We guarantee our products and you could get back
+                                            all of your money anytime you want in 30 days.</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h5 class="sub-title font-weight-bold"><span>3.</span>Special Financing
+                                        </h5>
+                                        <p class="detail pl-5">Get 20%-50% off items over 50$ for a month or
+                                            over 250$ for a year with our special credit card.</p>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="product-tab-specification">
+                                <ul class="list-none">
+                                    <li>
+                                        <label>Model</label>
+                                        <p>Skysuite 320</p>
+                                    </li>
+                                    <li>
+                                        <label>Color</label>
+                                        <p>
+                                        {% for variants in product.get_variants%}
+                                        {{variants.varient_name}},
+                                        {% endfor %}
+                                        </p>
+
+                                    </li>
+                                    <li>
+                                        <label>Size</label>
+                                        
+                                        <p>{% for size in size_ins %} 
+                                            
+                                            {% if size.product_size|lower == 'sm' %}
+                                            Extra Small
+                                            {% endif %}
+                                            {% if size.product_size|lower == 's' %}
+                                            Small
+                                            {% endif %}
+                                            {% if size.product_size|lower == 'm' %}
+                                            Medium
+                                            {% endif %}
+                                            {% if size.product_size|lower == 'l' %}
+                                            Large
+                                            {% endif %}
+                                            {% if size.product_size|lower == 'xl' %}
+                                            Extra Large
+                                            {% endif %}
+                                            {% if size.product_size|lower == 'xxl' %}
+                                            Extra Extra Large
+                                            {% endif %}
+                                            ,
+                                            {% endfor %}</p>
+                                    </li>
+                                    <li>
+                                        <label>Guarantee Time</label>
+                                        <p>3 Months</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane" id="product-tab-vendor">
+                                <div class="row mb-3">
+                                    <div class="col-md-6 pl-2 pl-md-6 mb-4">
+                                        <div class="vendor-user">
+                                            <figure class="vendor-logo mr-4">
+                                                <a href="#">
+                                                    <img src={% if store_info.store_logo%}"{{store_info.store_logo.url}}"{% else %}"{% static 'images/profile_av.svg'%}"{% endif %}
+                                                        alt="Vendor Logo" width="80" height="80" />
+                                                </a>
+                                            </figure>
+                                            <div>
+                                                <div class="vendor-name"><a href="#">{{store_info.store_vendor.first_name}}</a></div>
+                                                <div class="ratings-container">
+                                                    <div class="ratings-full">
+                                                        <span class="ratings" style="width: 90%;"></span>
+                                                        <span class="tooltiptext tooltip-top"></span>
+                                                    </div>
+                                                    <a href="#" class="rating-reviews">(32 Reviews)</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="vendor-info list-style-none">
+                                            <li class="store-name">
+                                                <label>Store Name:</label>
+                                                <span class="detail">{{store_info.store_name}}</span>
+                                            </li>
+                                            <li class="store-address">
+                                                <label>Address:</label>
+                                                <span class="detail">{{store_info.abline1}}, {{store_info.city}}, {{store_info.zip}}</span>
+                                            </li>
+                                            <li class="store-email">
+                                                <label>Email:</label>
+                                                {{store_info.store_email}}
+                                            </li>
+                                        </ul>
+                                        <a href="vendor-dokan-store.html"
+                                            class="btn btn-dark btn-link btn-underline btn-icon-right">Visit
+                                            Store<i class="w-icon-long-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="product-tab-reviews">
+                                <div class="row mb-4">
+                                    <div class="col-xl-4 col-lg-5 mb-4">
+                                        <div class="ratings-wrapper">
+                                            <div class="avg-rating-container">
+                                                <h4 class="avg-mark font-weight-bolder ls-50">{{product.average_rating|floatformat:1}}</h4> 
+                                                <div class="avg-rating">
+                                                    <p class="text-dark mb-1">Average Rating</p>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: {{product.average_rating|multiply_by_20}}%;"></span>
+                                                            <span class="tooltiptext tooltip-top"></span>
+                                                        </div>
+                                                        <a href="#" class="rating-reviews">({{product.total_review}})</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ratings-list">
+                                                <div class="ratings-container">
+                                                    <div class="ratings-full">
+                                                        <span class="ratings" style="width: 100%;"></span>
+                                                        <span class="tooltiptext tooltip-top"></span>
+                                                    </div>
+                                                    <div class="progress-bar progress-bar-sm ">
+                                                        <span></span>
+                                                    </div>
+                                                    <div class="progress-value">
+                                                        <mark>{{five_star_rating_percentage}}%</mark>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings-container">
+                                                    <div class="ratings-full">
+                                                        <span class="ratings" style="width: 80%;"></span>
+                                                        <span class="tooltiptext tooltip-top"></span>
+                                                    </div>
+                                                    <div class="progress-bar progress-bar-sm ">
+                                                        <span></span>
+                                                    </div>
+                                                    <div class="progress-value">
+                                                        <mark>{{four_star_rating_percentage}}%</mark>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings-container">
+                                                    <div class="ratings-full">
+                                                        <span class="ratings" style="width: 60%;"></span>
+                                                        <span class="tooltiptext tooltip-top"></span>
+                                                    </div>
+                                                    <div class="progress-bar progress-bar-sm ">
+                                                        <span></span>
+                                                    </div>
+                                                    <div class="progress-value">
+                                                        <mark>{{three_star_rating_percentage}}%</mark>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings-container">
+                                                    <div class="ratings-full">
+                                                        <span class="ratings" style="width: 40%;"></span>
+                                                        <span class="tooltiptext tooltip-top"></span>
+                                                    </div>
+                                                    <div class="progress-bar progress-bar-sm ">
+                                                        <span></span>
+                                                    </div>
+                                                    <div class="progress-value">
+                                                        <mark>{{two_star_rating_percentage}}%</mark>
+                                                    </div>
+                                                </div>
+                                                <div class="ratings-container">
+                                                    <div class="ratings-full">
+                                                        <span class="ratings" style="width: 20%;"></span>
+                                                        <span class="tooltiptext tooltip-top"></span>
+                                                    </div>
+                                                    <div class="progress-bar progress-bar-sm ">
+                                                        <span></span>
+                                                    </div>
+                                                    <div class="progress-value">
+                                                        <mark>{{one_star_rating_percentage}}%</mark>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-8 col-lg-7 mb-4">
+                                        <div class="review-form-wrapper">
+                                            <h3 class="title tab-pane-title font-weight-bold mb-1">Submit Your
+                                                Review</h3>
+                                            <p class="mb-3">Your email address will not be published. Required
+                                                fields are marked *</p>
+                                            <form action="#" method="POST" class="review-form">
+                                                <div class="rating-form">
+                                                    <label for="rating">Your Rating Of This Product :</label>
+                                                    <span class="rating-stars">
+                                                        <a class="star-1" href="#">1</a>
+                                                        <a class="star-2" href="#">2</a>
+                                                        <a class="star-3" href="#">3</a>
+                                                        <a class="star-4" href="#">4</a>
+                                                        <a class="star-5" href="#">5</a>
+                                                    </span>
+                                                    <select name="rating" id="rating" required=""
+                                                        style="display: none;">
+                                                        <option value="">Rate…</option>
+                                                        <option value="5">Perfect</option>
+                                                        <option value="4">Good</option>
+                                                        <option value="3">Average</option>
+                                                        <option value="2">Not that bad</option>
+                                                        <option value="1">Very poor</option>
+                                                    </select>
+                                                </div>
+                                                <textarea cols="30" rows="6"
+                                                    placeholder="Write Your Review Here..." class="form-control"
+                                                    id="review"></textarea>
+                                                <div class="row gutter-md">
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Your Name" id="author">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Your Email" id="email_1">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="checkbox" class="custom-checkbox"
+                                                        id="save-checkbox">
+                                                    <label for="save-checkbox">Save my name, email, and website
+                                                        in this browser for the next time I comment.</label>
+                                                </div>
+                                                <button type="submit" class="btn btn-dark">Submit
+                                                    Review</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab tab-nav-boxed tab-nav-outline tab-nav-center">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a href="#show-all" class="nav-link active">All reviews</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="show-all">
+                                            <ul class="comments list-style-none">
+                                            {% for review in reviews %}
+                                                <li class="comment">
+                                                    <div class="comment-body">
+                                                        <figure class="comment-avatar">
+                                                            <img src="{% if review.username.customer.cusstomer_image%}{{review.username.customer.cusstomer_image.url}}{% else %} {% static 'images/profile_av.svg'%}{% endif %}"
+                                                                alt="Commenter Avatar" width="90" height="90">
+                                                        </figure>
+                                                        <div class="comment-content">
+                                                            <h4 class="comment-author">
+                                                                <a href="#">{{review.username.customer.name}}</a>
+                                                                <span class="comment-date">{{review.date_created}}</span>
+                                                            </h4>
+                                                            <div class="ratings-container comment-rating">
+                                                                <div class="ratings-full">
+                                                                    <span class="ratings"
+                                                                        style="width:{{review.rating|multiply_by_20}}%;"></span>
+                                                                    <span
+                                                                        class="tooltiptext tooltip-top"></span>
+                                                                </div>
+                                                            </div>
+                                                            <p>{{review.review}}</p>
+                                                            <div class="comment-action">
+                                                                <div class="review-image">
+                                                                        <figure>
+                                                                            <img src="{% static 'assets/images/products/default/review-img-1.jpg'%}"
+                                                                                width="60" height="60"
+                                                                                alt="Attachment image of John Doe's review on Electronics Black Wrist Watch"
+                                                                                data-zoom-image="assets/images/products/default/review-img-1-800x900.jpg" />
+                                                                        </figure>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                                {% comment %} <li class="comment">
+                                                    <div class="comment-body">
+                                                        <figure class="comment-avatar">
+                                                            <img src="assets/images/agents/2-100x100.png"
+                                                                alt="Commenter Avatar" width="90" height="90">
+                                                        </figure>
+                                                        <div class="comment-content">
+                                                            <h4 class="comment-author">
+                                                                <a href="#">John Doe</a>
+                                                                <span class="comment-date">March 22, 2021 at
+                                                                    1:52 pm</span>
+                                                            </h4>
+                                                            <div class="ratings-container comment-rating">
+                                                                <div class="ratings-full">
+                                                                    <span class="ratings"
+                                                                        style="width: 80%;"></span>
+                                                                    <span
+                                                                        class="tooltiptext tooltip-top"></span>
+                                                                </div>
+                                                            </div>
+                                                            <p>Nullam a magna porttitor, dictum risus nec,
+                                                                faucibus sapien.
+                                                                Ultrices eros in cursus turpis massa tincidunt
+                                                                ante in nibh mauris cursus mattis.
+                                                                Cras ornare arcu dui vivamus arcu felis bibendum
+                                                                ut tristique.</p>
+                                                            <div class="comment-action">
+                                                                <a href="#"
+                                                                    class="btn btn-secondary btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize">
+                                                                    <i class="far fa-thumbs-up"></i>Helpful (1)
+                                                                </a>
+                                                                <a href="#"
+                                                                    class="btn btn-dark btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize">
+                                                                    <i class="far fa-thumbs-down"></i>Unhelpful
+                                                                    (0)
+                                                                </a>
+                                                                <div class="review-image">
+                                                                    <a href="#">
+                                                                        <figure>
+                                                                            <img src="assets/images/products/default/review-img-2.jpg"
+                                                                                width="60" height="60"
+                                                                                alt="Attachment image of John Doe's review on Electronics Black Wrist Watch"
+                                                                                data-zoom-image="assets/images/products/default/review-img-2.jpg" />
+                                                                        </figure>
+                                                                    </a>
+                                                                    <a href="#">
+                                                                        <figure>
+                                                                            <img src="assets/images/products/default/review-img-3.jpg"
+                                                                                width="60" height="60"
+                                                                                alt="Attachment image of John Doe's review on Electronics Black Wrist Watch"
+                                                                                data-zoom-image="assets/images/products/default/review-img-3.jpg" />
+                                                                        </figure>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="comment">
+                                                    <div class="comment-body">
+                                                        <figure class="comment-avatar">
+                                                            <img src="assets/images/agents/3-100x100.png"
+                                                                alt="Commenter Avatar" width="90" height="90">
+                                                        </figure>
+                                                        <div class="comment-content">
+                                                            <h4 class="comment-author">
+                                                                <a href="#">John Doe</a>
+                                                                <span class="comment-date">March 22, 2021 at
+                                                                    1:21 pm</span>
+                                                            </h4>
+                                                            <div class="ratings-container comment-rating">
+                                                                <div class="ratings-full">
+                                                                    <span class="ratings"
+                                                                        style="width: 60%;"></span>
+                                                                    <span
+                                                                        class="tooltiptext tooltip-top"></span>
+                                                                </div>
+                                                            </div>
+                                                            <p>In fermentum et sollicitudin ac orci phasellus. A
+                                                                condimentum vitae
+                                                                sapien pellentesque habitant morbi tristique
+                                                                senectus et. In dictum
+                                                                non consectetur a erat. Nunc scelerisque viverra
+                                                                mauris in aliquam sem fringilla.</p>
+                                                            <div class="comment-action">
+                                                                <a href="#"
+                                                                    class="btn btn-secondary btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize">
+                                                                    <i class="far fa-thumbs-up"></i>Helpful (0)
+                                                                </a>
+                                                                <a href="#"
+                                                                    class="btn btn-dark btn-link btn-underline sm btn-icon-left font-weight-normal text-capitalize">
+                                                                    <i class="far fa-thumbs-down"></i>Unhelpful
+                                                                    (1)
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li> {% endcomment %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="vendor-product-section">
+                        <div class="title-link-wrapper mb-4">
+                            <h4 class="title text-left">More Products From This Vendor</h4>
+                            <a href="#" class="btn btn-dark btn-link btn-slide-right btn-icon-right">More
+                                Products<i class="w-icon-long-arrow-right"></i></a>
+                        </div>
+                        <div class="swiper-container swiper-theme" data-swiper-options="{
+                            'spaceBetween': 20,
+                            'slidesPerView': 2,
+                            'breakpoints': {
+                                '576': {
+                                    'slidesPerView': 3
+                                },
+                                '768': {
+                                    'slidesPerView': 4
+                                },
+                                '992': {
+                                    'slidesPerView': 3
+                                }
+                            }
+                        }">
+                            <div class="swiper-wrapper row cols-lg-3 cols-md-4 cols-sm-3 cols-2">
+                            {% for product in vendor_products%}
+                                <div class="swiper-slide product">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img {% if product.product_images.image1%}
+                                            src="{{product.product_images.image1.url}}" 
+                                            {% elif product.product_images.image2%}
+                                            src="{{product.product_images.image2.url}}" 
+                                            {% elif product.product_images.image3%}
+                                            src="{{product.product_images.image3.url}}" 
+                                            {% elif product.product_images.image4%}
+                                            src="{{product.product_images.image4.url}}" 
+                                            {% elif product.product_images.image5%}
+                                            src="{{product.product_images.image5.url}}" 
+                                            {% else %} 
+                                            src="" 
+                                            {% endif %} alt="Product"
+                                                width="300" height="338" />
+                                            <img {% if product.product_images.image1%}
+                                            src="{{product.product_images.image1.url}}" 
+                                            {% elif product.product_images.image2%}
+                                            src="{{product.product_images.image2.url}}" 
+                                            {% elif product.product_images.image3%}
+                                            src="{{product.product_images.image3.url}}" 
+                                            {% elif product.product_images.image4%}
+                                            src="{{product.product_images.image4.url}}" 
+                                            {% elif product.product_images.image5%}
+                                            src="{{product.product_images.image5.url}}" 
+                                            {% else %} 
+                                            src="" 
+                                            {% endif %} alt="Product"
+                                                width="300" height="338" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                                title="Add to wishlist"></a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <div class="product-cat"><a href="shop-banner-sidebar.html">Accessories</a>
+                                        </div>
+                                        <h4 class="product-name"><a href="product-default.html">{{product.itmname}}</a>
+                                        </h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span id="ratings-{{forloop.counter}}" class="ratings" style="width: 0%;"></span>
+                                                <script>
+                                                    var element = document.getElementById("ratings-"+{{forloop.counter}});
+                                                    
+                                                    var averageRating = {{product.average_rating}}; 
+                                                  
+                                                    var width = averageRating * 20 + "%";
+                                                    element.style.width = `${width}`;
+                                                  </script>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                            <a href="{% url 'product_single' id=product.id %}" class="rating-reviews">({{product.total_review}} Reviews)</a>
+                                        </div>
+                                        <div class="product-pa-wrapper">
+                                            <div class="product-price">
+                                                <del class="old-price">₹{{product.itm_old_price}}</del>
+                                                <ins class="new-price">₹{{product.itm_new_price}}</ins>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </section>
+                    <section class="related-product-section">
+                        <div class="title-link-wrapper mb-4">
+                            <h4 class="title">Related Products</h4>
+                            <a href="#" class="btn btn-dark btn-link btn-slide-right btn-icon-right">More
+                                Products<i class="w-icon-long-arrow-right"></i></a>
+                        </div>
+                        <div class="swiper-container swiper-theme" data-swiper-options="{
+                            'spaceBetween': 20,
+                            'slidesPerView': 2,
+                            'breakpoints': {
+                                '576': {
+                                    'slidesPerView': 3
+                                },
+                                '768': {
+                                    'slidesPerView': 4
+                                },
+                                '992': {
+                                    'slidesPerView': 3
+                                }
+                            }
+                        }">
+                            <div class="swiper-wrapper row cols-lg-3 cols-md-4 cols-sm-3 cols-2">
+                                <div class="swiper-slide product">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="assets/images/products/default/5.jpg" alt="Product"
+                                                width="300" height="338" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                                title="Add to cart"></a>
+                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                                title="Add to wishlist"></a>
+                                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                                title="Add to Compare"></a>
+                                        </div>
+                                        <div class="product-action">
+                                            <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
+                                                View</a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h4 class="product-name"><a href="product-default.html">Drone</a></h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width: 100%;"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                            <a href="product-default.html" class="rating-reviews">(3 reviews)</a>
+                                        </div>
+                                        <div class="product-pa-wrapper">
+                                            <div class="product-price">$632.00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide product">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="assets/images/products/default/6.jpg" alt="Product"
+                                                width="300" height="338" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                                title="Add to cart"></a>
+                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                                title="Add to wishlist"></a>
+                                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                                title="Add to Compare"></a>
+                                        </div>
+                                        <div class="product-action">
+                                            <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
+                                                View</a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h4 class="product-name"><a href="product-default.html">Official Camera</a>
+                                        </h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width: 100%;"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                            <a href="product-default.html" class="rating-reviews">(3 reviews)</a>
+                                        </div>
+                                        <div class="product-pa-wrapper">
+                                            <div class="product-price">
+                                                <ins class="new-price">$263.00</ins><del
+                                                    class="old-price">$300.00</del>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide product">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="assets/images/products/default/7-1.jpg" alt="Product"
+                                                width="300" height="338" />
+                                            <img src="assets/images/products/default/7-2.jpg" alt="Product"
+                                                width="300" height="338" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                                title="Add to cart"></a>
+                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                                title="Add to wishlist"></a>
+                                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                                title="Add to Compare"></a>
+                                        </div>
+                                        <div class="product-action">
+                                            <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
+                                                View</a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h4 class="product-name"><a href="product-default.html">Phone Charge Pad</a>
+                                        </h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width: 80%;"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                            <a href="product-default.html" class="rating-reviews">(8 reviews)</a>
+                                        </div>
+                                        <div class="product-pa-wrapper">
+                                            <div class="product-price">$23.00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide product">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="assets/images/products/default/8.jpg" alt="Product"
+                                                width="300" height="338" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"
+                                                title="Add to cart"></a>
+                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                                title="Add to wishlist"></a>
+                                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                                title="Add to Compare"></a>
+                                        </div>
+                                        <div class="product-action">
+                                            <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
+                                                View</a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h4 class="product-name"><a href="product-default.html">Fashionalble
+                                                Pencil</a></h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width: 100%;"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                            <a href="product-default.html" class="rating-reviews">(9 reviews)</a>
+                                        </div>
+                                        <div class="product-pa-wrapper">
+                                            <div class="product-price">$50.00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- End of Main Content -->
+                <!-- End of Sidebar -->
+            </div>
+        </div>
+    </div>
+    <!-- End of Page Content -->
+</main>
+
+
+{% if messages%}
+{% for message in messages%}
+{{message}}
+{% endfor %}
+<script>
+ function popup_message() {
+    var imgElements = document.querySelectorAll("#product-thumb");
+    var imageUrl = null;
+    for (var i = 0; i < imgElements.length; i++) {
+      var src = imgElements[i].getAttribute('src');
+       if (src) {
+            imageUrl = window.location.origin+src;
+            break;
+       }
+    }
+    var product_name = document.getElementById("product-title").textContent;
+    var divElementCode = `<div class="minipopup-box show" style="top: 0px">
+        <div class="product product-list-sm product-cart">
+            <figure class="product-media">
+                <a href="#"><img src="${imageUrl}" alt="Product" width="80" height="90" /></a>
+            </figure>
+            <div class="product-details">
+                <h4 class="product-name"><a href="#">${product_name}</a></h4>
+                <p>has been added to cart:</p>
+            </div>
+        </div>
+        <div class="product-action">
+            <a href="/cart/" class="btn btn-rounded btn-sm">View Cart</a>
+            <a href="#" class="btn btn-dark btn-rounded btn-sm">Checkout</a>
+        </div>
+    </div>`;
+
+    var tempContainer = document.createElement('div');
+    tempContainer.innerHTML = divElementCode;
+    var newDiv = tempContainer.firstChild;
+    var parentDiv = document.querySelector('.minipopup-area');
+    parentDiv.appendChild(newDiv);
+    setTimeout(function() {
+        parentDiv.removeChild(newDiv);
+    }, 5000);
+
+};
+setTimeout(popup_message,1);
+</script>
+{% endif %}
+
+
+
+<script>
+    function color_active(color) {
+        var activeElements = document.querySelectorAll(".active");
+        var cart_button = document.querySelectorAll(".btn-cart.disabled");
+        var element = document.getElementById(color);
+        if (activeElements){
+            activeElements[0].classList.remove("active");
+            element.classList.add("active");
+            cart_button[0].classList.remove("disabled");
+        }else{
+            element.classList.add("active");
+        }
+      }
+
+    function size_active(size){
+        var activeelements = document.querySelectorAll(".active.size");
+        var element = document.getElementById(size);
+        if (activeelements[0]){
+            activeelements[0].classList.remove("active");
+            element.classList.add("active");
+        }else{
+            element.classList.add("active");
+        }
+    }
+
+</script>
+
+
+<script>
+
+    function hide_alert(){
+        document.getElementById("alert-box").style.display="None";
+       }
+       setTimeout(hide_alert,3000);
+
+       $(function () {
+        $('[data-toggle="popover"]').popover({
+            trigger: 'focus'
+        });
+    });
+
+    $(document).ready(function () {
+        $('#dismissPopover').popover({
+            trigger: 'focus'
+        });
+    });
+
+    function get_color(color){
+        var color_name = color
+        var cur_url = window.location.href
+        if (cur_url.indexOf('?') !== -1) {
+            // URL already contains query parameters
+            // Check if the 'rating' parameter exists
+            if (cur_url.indexOf('color=') !== -1) {
+                // Replace the value of the 'rating' parameter
+                cur_url = cur_url.replace(/(color=)[^\&]+/, '$1' + color_name);
+            } else {
+                // Append the 'rating' parameter
+                cur_url += "?color=" + color_name;
+            }
+        } else {
+            // URL doesn't contain query parameters
+            // Add query parameters with the 'rating' parameter
+            cur_url += "?color=" + color_name;
+        }
+        //window.location.href = cur_url;
+    }
+
+</script>
+<script>
+    const shareButton = document.getElementById('shareButton');
+    const username = "{{ request.user.buyer.code }}";
+    let url;
+    if (username) {
+        url = window.location.href + '?referal=' + username;
+    } else {
+        url = window.location.href;
+    }
+
+    shareButton.addEventListener('click', () => {
+        if (navigator.share) {
+            shareViaWebShareAPI();
+        } else {
+            alert('This browser is not supported for sharing.');
+        }
+    });
+
+    async function shareViaWebShareAPI() {
+        try {
+            await navigator.share({
+                title: 'cattnbuy',
+                text: 'Check out this product!',
+                url : url,
+            });
+        } catch (error) {
+            console.error('Error sharing:', error);
+        }
+    }
+</script>
+
+<script>
+
+    async function fetchData(url) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return null;
+        }
+    }
+
+    function add_to_wishlist(id){
+        var item_id = id
+        const baseUrl = window.location.origin;
+        const url= baseUrl + '/add_to_favourite/' + item_id + '/'
+
+        fetchData(url)
+        .then(data => {
+            if (data) {
+                var element = document.getElementById("product-"+`${item_id}`);
+                element.classList.remove("w-icon-heart");  // Remove the class
+                element.classList.add("w-icon-heart-full"); // Add the class
+                element.style.color = "red";
+                element.onclick = function () { remove_from_wishlist(item_id); };
+                //element.onclick = "remove_from_wishlist(" + item_id + ")";
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }
+
+    function remove_from_wishlist(id){
+        var item_id = id
+        const baseUrl = window.location.origin;
+        const url= baseUrl + '/remove_from_favourite/' + item_id + '/'
+
+        fetchData(url)
+        .then(data => {
+            if (data) {
+                var element = document.getElementById("product-"+`${item_id}`);
+                element.classList.remove("w-icon-heart-full"); // Add the class
+                element.classList.add("w-icon-heart");  // Remove the class
+                element.style.color = "grey";
+                element.onclick = function () { add_to_wishlist(item_id); };
+
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }
+</script>
+
+
+<script>
+    function get_browsing_data(){
+        console.log("success");
+    }
+    setTimeout(get_browsing_data,10000)
+</script>
+
+{% endblock content%}

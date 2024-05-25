@@ -1,0 +1,431 @@
+{% extends 'main.html'%}
+{% load static %}
+
+{% block content%}
+            <div class="body d-flex py-3">
+                <div class="container-xxl">
+                    <div class="row align-items-center">
+                        <div class="border-0 mb-4">
+                            <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                                <h3 class="fw-bold mb-0">Vendor Profile</h3>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                {% if messages%}{% for message in messages%}
+                                <div class="alert {{message.tags}} fade show" id="alert-box">
+                                    <div class="d-flex align-items-center">
+                                        <i class='bx bx-info-circle fs-5 m-2'></i>
+                                    {{message}}
+                                    {% endfor %}
+                                    </div>
+                                  </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div> <!-- Row end  -->
+                    <div class="row g-3">
+                        <div class="col-xl-4 col-lg-5 col-md-12">
+                            <div class="card profile-card flex-column mb-3">
+                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Profile Settings</h6>
+                                </div>
+                                <div class="card-body d-flex profile-fulldeatil flex-column">
+                                    <div class="profile-block text-center w220 mx-auto">
+                                        <a href="#">
+                                            <img src="{% if user.customer.cusstomer_image %}{{user.customer.cusstomer_image.url}}{% else %}{% static 'images/profile_av.svg'%}{% endif %}" alt="" class="avatar xl rounded img-thumbnail shadow-sm">
+                                        </a>
+                                        <button class="btn btn-primary" style="position: absolute;top:15px;right: 15px;" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="icofont-edit"></i></button>
+                                        <div class="about-info d-flex align-items-center mt-3 justify-content-center flex-column">
+                                            <span class="text-muted small">Vendor ID : #{{user.id}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info w-100">
+                                        <h6  class="mb-0 mt-2  fw-bold d-block fs-6 text-center">{{user.first_name}} {{user.last_name}}</h6>
+                                        <span class="py-1 fw-bold small-11 mb-0 mt-1 text-muted text-center mx-auto d-block">{{ age}}                                       
+                                    
+                                            years, India</span>
+                                        <div class="row g-2 pt-2">
+                                            {% if user.customer.phone_number%}
+                                            <div class="col-xl-12">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="icofont-ui-touch-phone"></i>
+                                                    <span class="ms-2">{{user.customer.phone_number}} </span>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% if user.customer.email%}
+                                            <div class="col-xl-12">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="icofont-email"></i>
+                                                    <span class="ms-2">{{user.customer.email}}</span>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% if user.customer.birthday%}
+                                            <div class="col-xl-12">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="icofont-birthday-cake"></i>
+                                                    <span class="ms-2">{{user.customer.birthday|date:" j M, Y"}}</span>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="card-header d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Refer and earn</h6>
+                                </div>
+                                <div class="card-body">
+                                    <small class="fw-bold text-muted"><span style="color:red;">**</span> Invite your friends and family to join the Cart And Buy community.</small>
+                                    <div class="mt-3 d-flex payment-info">
+                                        <span class="input-group-text">Code:</span>
+                                        <input name="ref_code" type="text" class="form-control" id="share-link" value="{{user.customer.code}}" readonly>
+                                    </div>
+                                    <div class="d-flex">
+                                    <p class="mt-3"><button onclick="copylink()" class="btn btn-primary">Share link</button></p>
+                                    {% comment %} <p style="padding-left:5px;" class="mt-3"><button onclick="copyToClipboard()" class="btn btn-primary"> Copy code</button></p> {% endcomment %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="mb-1 fw-bold ">API Keys</h6>
+                                    <span class="text-muted">Coming soon..</span>
+                                    {% comment %} <div class="mt-4">
+                                        <div class="form-check form-switch mt-2">
+                                            <input class="form-check-input" type="checkbox" id="np-Newsletter">
+                                            <label class="form-check-label" for="np-Newsletter">Activity Notifications</label>
+                                        </div>
+                                        <div class="form-check form-switch mt-2">
+                                            <input class="form-check-input" type="checkbox" id="np-Notifications">
+                                            <label class="form-check-label" for="np-Notifications">Comment Notifications</label>
+                                        </div>
+                                        <div class="form-check form-switch mt-2">
+                                            <input class="form-check-input" type="checkbox" id="np-Preferences" checked="">
+                                            <label class="form-check-label" for="np-Preferences">Email Preferences</label>
+                                        </div>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-8 col-lg-7 col-md-12">
+                            <div class="card mb-3">
+                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Store Settings</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form class="row g-4" method = "POST" enctype="multipart/form-data">
+                                    {% csrf_token%}
+                                        <div class="col-md-12 col-sm-12">
+                                        <div class="profile-block text-center mx-auto">
+                                            <a href="#">
+                                                <img src="{% if store_ins.store_logo%}{{store_ins.store_logo.url}}{%else%}{% static 'images/store-logo.png'%}{%endif%}" alt="" class="avatar xl rounded img-thumbnail shadow-sm" style="height: 200px;width: 200px;">
+                                            </a>
+                                        </div>
+                                         </div>
+                                        <div class="col-sm-6">
+                                            <label for="taxtno200" class="form-label">Upload Store logo: </label>
+                                            <input name="store_logo" type="file" class="form-control" id="input-image">
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Store Name: <span class="text-danger">*</span></label>
+                                                <input name="store_name" class="form-control" type="text" value="{{store_ins.store_name}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Appartment/House No: <span class="text-danger">*</span></label>
+                                                <input name="store_abline1" class="form-control" type="text" value="{{store_ins.abline1}}">
+                                            </div>
+                                        </div>          
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Street/Area Name:</label>
+                                                <input name="store_abline2" class="form-control" type="text" value="{{store_ins.abline2}}">
+                                            </div>
+                                        </div>                                        
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Landmark</label>
+                                                <input name="store_abline3" class="form-control" type="text" value="{{store_ins.abline3}}">
+                                            </div>
+                                        </div>                                       
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Town/City:</label>
+                                                <input name="city" class="form-control" type="text" value="{{store_ins.city}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">District:</label>
+                                                <input name="district" class="form-control" type="text" value="{{store_ins.district}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-label">State:</label>
+                                                <select class="form-control">
+                                                    <option>Odisha</option>
+                                                    <option>Assam</option>
+                                                    <option selected>West Bengal</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Pin: <span class="text-danger">*</span></label>
+                                                <input name="zip" class="form-control" type="text" value="{{store_ins.zip}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label class="form-label">Email: <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">@</span>
+                                                <input name="store_email" type="text" class="form-control" value="{{store_ins.store_email}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label class="form-label">Facebook Url:</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">Facebook:</span>
+                                                <input name="store_facebook" type="text" class="form-control" value="{{store_ins.store_facebook}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label class="form-label">Instagram Url:</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">Instagram:</span>
+                                                <input name="store_instagram" type="text" class="form-control" value="{{store_ins.store_instagram}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label class="form-label">X (Twitter) Url:</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">X (Twitter):</span>
+                                                <input name="store_twitter" type="text" class="form-control" value="{{store_ins.store_twitter}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-4">
+                                            <button name="store_update" type="submit" class="btn btn-primary text-uppercase px-5">SAVE</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card auth-detailblock">
+                                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                    <h6 class="mb-0 fw-bold ">Authentication Details</h6>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authchange"><i class="icofont-edit"></i></button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">User Name :</label>
+                                            <span><strong>{{user.username}}</strong></span>
+                                        </div>
+                                        <div class="d-flex col-12">
+                                            <label class="form-label col-6 col-sm-5">Last Login:</label>
+                                            <span><strong>{{last_login.last_login_ip}} ({{last_login.device_name}}) - {{last_login.browser_name}}</strong></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label col-6 col-sm-5">Date Joined:</label>
+                                            <span><strong>{{user.date_joined|date:"j M, Y"}}</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                        <!-- Edit Password-->
+                        <div class="modal fade" id="authchange" tabindex="-1"  aria-hidden="true">
+                            <form method="POST">
+                                {% csrf_token %}
+                            <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title  fw-bold" id="expeditLabel"> Update Authentication</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <div class="deadline-form">
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-12">
+                                                    <label for="item1" class="form-label">User Name:</label>
+                                                    <input name="username" type="text" class="form-control" id="item1" value="{{user.username}}"> 
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    
+                                                    <label for="taxtno111" class="form-label">New Password:</label>
+                                                    <div class="input-group" id="show_hide_password">
+                                                        <input type="password" class="form-control border-end-0" name="password" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+                                    <button name="update_user" type="submit" class="btn btn-primary">Save</button>                                        
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                        </div>
+            
+                        <!-- Edit profile-->
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="modal fade" id="editprofile" tabindex="-1"  aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title  fw-bold" id="expeditLabel1111"> Edit Profile</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <div class="deadline-form">
+                                        <form>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-12">
+                                                    <label for="item100" class="form-label">Name:</label>
+                                                    <input name="name" type="text" class="form-control" id="item100" value="{{user.first_name}} {{user.last_name}}" placeholder="Enter Your Name"> 
+                                                </div>
+
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-6">
+                                                    <label for="taxtno200" class="form-label">Profile Photo: <span class="text-danger">*</span></label>
+                                                    <input type="file" name="profile_photo" id="profile_photo" class="file-input">
+                                                </div>
+                                            <div class="col-sm-6">
+                                                <label for="abc1" class="form-label">Birthday date: <span class="text-danger">*</span></label>
+                                                <input type="date" name="birthday" class="form-control w-100" value="{{ user.customer.birthday|date:"Y-m-d" }}">
+                                            </div>
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-6">
+                                                <label for="mailid" class="form-label">Mail:</label>
+                                                <input name="user_email" type="text" class="form-control" id="mailid" value="{{user.customer.email}}" placeholder="Enter email">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="phoneid" class="form-label">Phone: </label>
+                                                    <input name="user_phone" type="text" class="form-control" id="phoneid" value="{{user.customer.phone_number}}" placeholder="0123456789">
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-12">
+                                                    <label class="form-label">Appartment/House No: <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" 
+                                                    name="adrline1" value="{{address_ins.abline1}}" placeholder="Appartment/House No">
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-12">
+                                                    <label class="form-label">Street/Area Name:</label>
+                                                    <input type="text" value="{{address_ins.abline2}}" class="form-control" 
+                                                    name="adrline2" placeholder="Street/Area Name">
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-12">
+                                                    <label class="form-label">Landmark:</label>
+                                                    <input type="text" value="{{address_ins.abline3}}" class="form-control" 
+                                                    name="adrline3" placeholder="Landmark">
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-12">
+                                                    <label class="form-label">Town/City:</label>
+                                                    <input type="text" value="{{address_ins.city}}" class="form-control" 
+                                                    name="city" placeholder="Town/City">
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-12">
+                                                    <label class="form-label">District:</label>
+                                                    <input type="text"  class="form-control" 
+                                                    name="district" value="{{address_ins.district}}" placeholder="District">
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-12">
+                                                    <label class="form-label">State:</label>
+                                                    <input type="text" value="{{address_ins.state}}" class="form-control" 
+                                                    name="state" placeholder="State">
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-sm-12">
+                                                    <label class="form-label">Pin: <span class="text-danger">*</span></label>
+                                                    <input type="text" value="{{address_ins.zip}}" class="form-control" 
+                                                    name="postal" placeholder="012345">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+                                    <button type="submit" name="profile_update" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>  
+                </form>
+                </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function hide_alert(){
+        document.getElementById("alert-box").style.display="None";
+       }
+       setTimeout(hide_alert,5000);
+	$(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("bx-hide");
+                $('#show_hide_password i').removeClass("bx-show");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("bx-hide");
+                $('#show_hide_password i').addClass("bx-show");
+            }
+        });
+    });
+</script>
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("share-link");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+        document.execCommand("copy");
+    }
+    function copylink() {
+        var urlParts = window.location.href.split('/');
+        var url = urlParts[0] + '//' + urlParts[2] + '/v_register/';
+        var copyText = document.getElementById("share-link");
+        var newurl = url + copyText.value
+        var tempTextArea = document.createElement("textarea");
+        tempTextArea.value = newurl;
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempTextArea);
+        alert("Copied the link: " + newurl);
+    }
+
+</script>
+{% endblock content%}

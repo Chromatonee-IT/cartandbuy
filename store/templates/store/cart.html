@@ -1,0 +1,215 @@
+{% extends "store/main.html" %} {% load static%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/custom.css' %}" />
+{% block content%}
+<style>
+    @media (max-width:767px){
+        .d-sm-flex{
+            display: flex !important;
+            justify-content: center;
+        }
+        
+    }
+</style>
+<!-- Start of Main -->
+<main class="main cart">
+    <!-- Start of Breadcrumb -->
+    <nav class="breadcrumb-nav">
+        <div class="container">
+            <ul class="breadcrumb shop-breadcrumb bb-no">
+                <li class="active"><a href="/cart/">Shopping Cart</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End of Breadcrumb -->
+
+    <!-- Start of PageContent -->
+    <div class="page-content">
+        <div class="container">
+            {% if cart_items%}
+            <div class="row gutter-lg mb-10">
+                <div class="col-lg-8 pr-lg-4 mb-6">
+
+
+                    <table class="shop-table cart-table">
+                        <thead>
+                            <tr>
+                                <th class="product-name"><span>Product</span></th>
+                                <th></th>
+                                <th style="text-align: start;" class="product-price"><span>Price</span></th>
+                                <th style="text-align: start;" class="product-quantity"><span>Quantity</span></th>
+                                <th style="text-align: start;" class="product-subtotal"><span>Subtotal</span></th>
+                                <th style="text-align: start;" class="product-subtotal"><span></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for cart_item in cart_items%}
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <div class="p-relative">
+                                        <a href="{% url 'product_single' id=cart_item.product.id %}">
+                                            <figure>
+                                                <img {% if cart_item.product.product_images.image1 %}
+                                                src="{{cart_item.product.product_images.image1.url}}"
+                                                {% else %}
+                                                src=""
+                                                {%endif%} alt="product"
+                                                    width="300" height="338">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="product-name">
+                                    <a href="product-default.html">
+                                        {{cart_item.product.itmname}}
+                                    </a>
+                                </td>
+                                <td class="product-price"><span name="product_price-{{cart_item.pk}}" class="amount">₹{{cart_item.product.itm_new_price}}</span></td>
+                                <td class="product-quantity d-sm-flex justify-content-center">
+                                    <div class="qty-input">
+                                        <button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
+                                        <input id="{{cart_item.pk}}" style="color:black" class="product-qty" type="number" name="product-qty-{{cart_item.pk}}" value="{{cart_item.cart_count}}" min="0" max="100" value="1">
+                                        <button class="qty-count qty-count--add" data-action="add" type="button">+</button>
+                                    </div>
+                                </td>
+                                <td class="product-subtotal">
+                                    <span name="product_subtotal-{{cart_item.pk}}" class="amount">₹40.00</span>
+                                    <script>
+                                        var qty = document.getElementsByName("product-qty-"+{{cart_item.pk}})[0].value;
+                                        var priceText = document.getElementsByName("product_price-"+{{cart_item.pk}})[0].textContent;
+                                        var price = parseFloat(priceText.replace('₹', ''));
+                                        var subtotal = document.getElementsByName("product_subtotal-"+{{cart_item.pk}})[0];
+                                        subtotal.textContent = '₹' + (qty*price)
+                                    </script>
+                                </td>
+                                <td class="product-subtotal">
+                                    <div style="margin: 10px" class="ml-auto product-qty-form">
+                                        <a href="/remove_from_cart/{{cart_item.pk}}/" class="btn btn-dark btn-sm">Remove</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="cart-action mb-6">
+                        <a
+                            href="#"
+                            class="btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto"
+                            ><i class="w-icon-long-arrow-left"></i>Continue
+                            Shopping</a
+                        >
+                        <button
+                            type="submit"
+                            class="btn btn-rounded btn-default btn-clear"
+                            name="clear_cart"
+                            value="Clear Cart"
+                        >
+                            Clear Cart
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-4 sticky-sidebar-wrapper">
+                    <div class="sticky-sidebar">
+                        <div class="cart-summary mb-4">
+                            <h3 class="cart-title text-uppercase">
+                                Cart Totals
+                            </h3>
+                            <div class="cart-subtotal d-flex align-items-center justify-content-between">
+                                <label class="ls-25">Subtotal</label>
+                                <span id="sub_total">₹{{cart_total}}</span>
+                            </div>
+
+                            <hr class="divider" />
+
+                            <div class="d-flex align-items-center justify-content-between">
+                                <label class="ls-25">Delivery charges</label>
+                                <span>₹100.00</span>
+                            </div>
+
+                            <hr style="margin-top:10px;" class="divider" />
+
+                            <div style="margin-top:10px;" class="shipping-calculator">
+                                <p class="shipping-destination lh-1">
+                                    Apply coupon<strong style="color:red;">*</strong>
+                                </p>
+
+                                <form class="shipping-calculator-form">
+                                    <div class="form-group">
+                                        <div class="select-box">
+                                            <select name="country" class="form-control form-control-md">
+
+                                                <option
+                                                    value="default"
+                                                    selected="selected"
+                                                >
+                                                Select coupon
+                                                </option>
+
+                                                <option value="us">
+                                                    United States
+                                                </option>
+                                                <option value="uk">
+                                                    United Kingdom
+                                                </option>
+                                                <option value="fr">
+                                                    France
+                                                </option>
+                                                <option value="aus">
+                                                    Australia
+                                                </option>
+                                            </select>
+                                        </div>  
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-dark btn-outline btn-rounded"
+                                    >
+                                    Apply
+                                    </button>
+                                </form>
+                            </div>
+
+                            <hr class="divider mb-6" />
+                            <div
+                                class="order-total d-flex justify-content-between align-items-center"
+                            >
+                                <label>Total</label>
+                                <span id="total" class="ls-50">₹{{cart_total|add:100}}</span>
+                            </div>
+                            <a
+                                href="#"
+                                class="btn btn-block btn-dark btn-icon-right btn-rounded btn-checkout"
+                            >
+                                Proceed to checkout<i
+                                    class="w-icon-long-arrow-right"
+                                ></i
+                            ></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="d-flex justify-content-center">
+                <h4 style="color: red; padding-bottom: 10px">
+                    No items in the cart.
+                </h4>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a
+                    href="/"
+                    class="btn btn-dark btn-rounded btn-icon-left btn-shopping mb-3"
+                    ><i class="w-icon-long-arrow-left"></i>Continue Shopping</a
+                >
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- End of PageContent -->
+
+
+
+
+    
+</main>
+<!-- End of Main -->
+{% endblock content %}

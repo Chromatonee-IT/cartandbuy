@@ -1,0 +1,629 @@
+{% extends "store/main.html" %}
+
+{% load static%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% block content%}
+<div class="d-flex justify-content-center">
+    {% if messages%}{% for message in messages%}
+    <div class="alert {{message.tags}} fade show" id="alert-box">
+        <div class="d-flex align-items-center">
+            <i class='bx bx-info-circle fs-5 m-2'></i>
+        {{message}}
+        {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+</div>
+		<!--start page wrapper -->
+		<div class="page-wrapper">
+			<div class="page-content">
+				<!--start product detail-->
+            {% for product in products%}
+				<section class="py-0">
+					<div class="container">
+						<div class="product-detail-card">
+							<div class="product-detail-body">
+                                
+								<div class="row g-0">
+									<div class="col-12 col-lg-5">
+										<div class="image-zoom-section">
+											<div class="d-flex justify-content-end">
+												<div class="d-flex position-absolute p-2" style="z-index: 99;">
+													<a href="javascript:;" class="btn btn-light btn-ecomm"><i class="bx bx-heart"></i></a>
+												</div>
+											</div>
+											<div class="product-gallery owl-carousel owl-theme border mb-3 p-3" data-slider-id="1">
+                                                {% if product.product_images.image1%}
+												<div class="item image_style">
+													<img src="{{product.product_images.image1.url}}" class="img-fluid" alt="">
+												</div>
+                                                {% endif %}
+                                                {% if product.product_images.image2%}
+												<div class="item image_style">
+													<img  src="{{product.product_images.image2.url}}" class="img-fluid" alt="">
+												</div>
+                                                {% endif %}
+                                                {% if product.product_images.image3%}
+												<div class="item">
+													<img src="{{product.product_images.image3.url}}" class="img-fluid" alt="">
+												</div>
+                                                {% endif %}
+                                                {% if product.product_images.image4%}
+												<div class="item">
+													<img src="{{product.product_images.image4.url}}" class="img-fluid" alt="">
+												</div>
+                                                {% endif %}
+                                                {% if product.product_images.image5%}
+                                                <div class="item">
+													<img src="{{product.product_images.image5.url}}" class="img-fluid" alt="">
+												</div>
+                                                {% endif %}
+											</div>
+											<div class="owl-thumbs d-flex justify-content-center" data-slider-id="1">
+                                                {% if product.product_images.image1%}
+												<button class="owl-thumb-item">
+													<img src="{{product.product_images.image1.url}}"class="" alt="">
+												</button>
+                                                {% endif %} 
+                                                {% if product.product_images.image2%}
+												<button class="owl-thumb-item">
+													<img src="{{product.product_images.image2.url}}"class="" alt="">
+												</button>
+                                                {% endif %} 
+                                                {% if product.product_images.image3%}
+												<button class="owl-thumb-item">
+													<img src="{{product.product_images.image3.url}}"class="" alt="">
+												</button>
+                                                {% endif %} 
+                                                {% if product.product_images.image4%}
+												<button class="owl-thumb-item">
+													<img src="{{product.product_images.image4.url}}"class="" alt="">
+												</button>
+                                                {% endif %} 
+                                                {% if product.product_images.image5%}
+												<button class="owl-thumb-item">
+													<img src="{{product.product_images.image5.url}}"class="" alt="">
+												</button>
+                                                {% endif %} 
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-lg-7">
+										<div class="product-info-section p-3">
+											<div class=" d-flex justify-content-between mb-2">
+											<h4 class="mt-3 mt-lg-0 mb-0">{{product.itmname}}</h4>
+											</div>
+											<div class="d-flex align-items-center gap-2">
+												<h5 class="mb-0 text-danger text-decoration-line-through text-light-3">₹{{product.itm_old_price}}</h5>
+												<h4 class="mb-0">₹{{product.itm_new_price}}</h4>
+											</div>
+											<div class="product-rating d-flex align-items-center mt-2">
+												<div class="rates cursor-pointer" style="margin-top:1.3rem;">
+                                                    <input type="stars" class="rating container-fluid" readonly value="{{ average_rating }}" data-size="xs" data-stars="5">
+												</div>
+												<div class="ms-1">
+													<p class="mb-0"><strong>{{total_reviews}} Ratings</strong></p>
+												</div>
+											</div>
+											<div class="mt-3">
+											{% if discount_coupon%}
+												<h6 style="color:green;">Available Offers :</h6>
+												{% for coupon in discount_coupon%}
+												<div class="d-flex gap-1">
+												<a id="dismissPopover" href="#" data-toggle="popover" data-placement="top" title="{{coupon.offer_cat}} {% if coupon.offer_cat.id == 1%}(₹{{coupon.discount_value}}) {% endif %} {% if coupon.offer_cat.id == 2%}({{coupon.discount_value}}%) {% endif %}" data-content="12345678">
+												<i class="bx bx-purchase-tag" style="color:green;"></i>
+												</a>
+												<p class="mb-0">{{coupon}}</p>
+												</div>
+												{% endfor %}
+											{% else %}
+											<h6 style="color:red;"> No offers available</h6>
+											{% endif %}
+											</div>
+											<div class="row row-cols-auto align-items-center mt-3">
+												<div class="col">
+													<label class="form-label">Quantity</label>
+													<select class="form-select form-select-sm">
+														<option>1</option>
+														<option>2</option>
+														<option>3</option>
+														<option>4</option>
+														<option>5</option>
+														<option>6</option>
+														<option>7</option>
+														<option>8</option>
+														<option>9</option>
+													</select>
+												</div>
+                                                {% if size_ins%}
+												<div class="col">
+													<label class="form-label">Size</label>
+													<select class="form-select form-select-sm">
+													{% for size_ins in size_ins%}
+														<option>{{size_ins.product_size | upper}}</option>
+													{% endfor %}
+													</select>
+												</div>
+												{% endif %}
+                                                {% if product.get_variants%}
+												<div class="col">
+													<label class="form-label">Colors</label>
+													<div class="color-indigators d-flex align-items-center gap-2">
+                                                        {% for variants in product.get_variants%}
+														<a href="{% url 'product_single' product.id %}?color={{variants.varient_name}}">
+                                                        <div style="background-color:{{variants.color_code}};" class="color-indigator-item border"></div>
+														</a>
+                                                        {% endfor %}
+													</div>
+												</div>
+                                                {% endif %}
+											</div>
+											<!--end row-->
+											<div class="d-flex gap-2 mt-3">
+												<a href="javascript:;" class="btn btn-dark btn-ecomm">Order Now</a> 
+												<a href="/add_to_cart/{{product.id}}/?color={{selected_color}}" class="btn btn-dark btn-ecomm">Add to Cart</a> 
+											</div>
+											<hr/>
+											<div class="product-sharing">
+												<h6 class="mb-3">Refer and earn:</h6>
+												<div class="d-flex align-items-center gap-2 flex-wrap">
+													<div class="">
+													  <button type="button" class="btn-social bg-facebook"><i class='bx bxl-facebook'></i></button>
+													</div>
+													<div class="">
+													  <button type="button" class="btn-social bg-instagram"><i class='bx bxl-instagram'></i></button>
+													</div>
+													<div class="">
+													  <button type="button" class="btn-social bg-whatsapp"><i class='bx bxl-whatsapp'></i></button>
+													</div>
+													<div class="">
+													  <button type="button" id="shareButton" class="btn-social bg-share"><i class='bx bx-share-alt'></i></button>
+													</div>
+												  </div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--end row-->
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end product detail-->
+				<!--start product more info-->
+				<section class="py-4">
+					<div class="container">
+						<div class="product-more-info">
+							<ul class="nav nav-tabs mb-0" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link" data-bs-toggle="tab" href="#discription">
+										<div class="d-flex align-items-center">
+											<div class="dynamic-h3 tab-title text-uppercase fw-500">Description</div>
+										</div>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-bs-toggle="tab" href="#more-info">
+										<div class="d-flex align-items-center">
+											<div class="dynamic-h3 tab-title text-uppercase fw-500">Store</div>
+										</div>
+
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link active" data-bs-toggle="tab" href="#reviews">
+										<div class="d-flex align-items-center">
+											<div class="dynamic-h3 tab-title text-uppercase fw-500">({{total_reviews}}) Reviews</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+							<div class="tab-content pt-3">
+								<div class="tab-pane fade" id="discription">
+									<p>{{product.itmdesc}}</p>
+								</div>
+								<div class="tab-pane fade" id="more-info">
+									<img class="avatar lg rounded-circle img-thumbnail mb-2" style="height: 50px; width: 50px;" src={% if store_info.store_logo%}"{{store_info.store_logo.url}}"{% else %}"{% static 'images/profile_av.svg'%}"{% endif %} alt="profile">
+									<p><strong>Store Name:</strong> {{store_info.store_name}}</p>
+									<p><strong>Store Email:</strong> {{store_info.store_email}}</p>
+									<p><strong>Store Address:</strong> {{store_info.abline1}},{{store_info.city}},{{store_info.zip}}</p>
+								</div>
+								<div class="tab-pane fade show active" id="reviews">
+									<div class="row">
+										<div class="col col-lg-8">
+											<div class="product-review">
+												<h5 class="mb-4">{{total_reviews}} Reviews For The Product</h5>
+												<div class="review-list">
+                                                {% for review in reviews%}
+													<div class="d-flex align-items-start">
+														<div class="review-user">
+															<img src={% if review.username.customer.cusstomer_image%}"{{review.username.customer.cusstomer_image.url}}"{% else%}{% static 'images/profile_av.svg'%}{% endif%} width="65" height="65" class="rounded-circle" alt="" />
+														</div>
+														<div class="review-content ms-3">
+                                                            <input type="stars" class="rating container-fluid" readonly value="{{ review.rating }}" data-size="xs" data-stars="5">
+															<div class="d-flex d-flex justify-content-between mb-2">
+                                                                <div>
+																<h6 class="mb-0">{{review.username.customer.name}}</h6>
+                                                                </div>
+                                                                <div>
+																<p class="mb-0">{{review.date_created}}</p>
+                                                                </div>
+															</div>
+															<p>{{review.review}}</p>
+														</div>
+													</div>
+													<hr/>
+                                                {% endfor %}
+												</div>
+											</div>           
+										</div>
+										<div class="col col-lg-4">
+											<div class="add-review border">
+												<div class="form-body p-3">
+													<h4 class="mb-4">Write a Review</h4>
+                                                    <form method="post" action="{% url 'product_single' product.id %}">
+                                                        {% csrf_token %}
+                                                        <div class="mb-3"> 
+                                                            <label class="form-label">Rating</label>
+                                                            <select class="form-select rounded-0" id="rating" name="rating">
+                                                                <option selected disabled>Choose Rating</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Write Review</label>
+                                                            <textarea class="form-control rounded-0" rows="3" id="review" name="review"></textarea>
+                                                        </div>
+                                                        <div class="d-grid">
+                                                            <button type="submit" class="btn btn-dark btn-ecomm" >Submit a Review</button>
+                                                        </div>
+                                                    </form>
+                                                    
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--end row-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+                {% endfor %}
+				<!--end product more info-->
+				<!--start similar products-->
+				<section class="py-4">
+					<div class="container">
+						<div class="separator pb-4">
+							<div class="line"></div>
+							<h5 class="mb-0 fw-bold separator-title">Similar Products</h5>
+							<div class="line"></div>
+						 </div>
+						 <div class="product-grid">
+							<div class="similar-products owl-carousel owl-theme position-relative">
+								 <div class="item">
+									<div class="card">
+										<div class="position-relative overflow-hidden">
+											<div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+												<a href="javascript:;"><i class='bx bx-cart-add' ></i></a>
+											  </div>
+										  <div class="quick-view position-absolute start-0 bottom-0 end-0">
+											<a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewProduct">Quick View</a>
+										  </div>
+										  <a href="javascript:;">
+											<img src="assets/images/similar-products/01.png" class="img-fluid" alt="...">
+										  </a>
+										</div>
+										<div class="card-body px-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <div class="">
+												  <p class="mb-1 product-short-name">Topwear</p>
+												  <h6 class="mb-0 fw-bold product-short-title">White Polo Shirt</h6>
+											  </div>
+											  <div class="icon-wishlist">
+												  <a href="javascript:;"><i class="bx bx-heart"></i></a>
+											  </div>
+										  </div>
+										  <div class="cursor-pointer rating mt-2">
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+										  </div>
+										  <div class="product-price d-flex align-items-center justify-content-start gap-2 mt-2">
+											<div class="h6 fw-light fw-bold text-secondary text-decoration-line-through">$59.00</div>
+											<div class="h6 fw-bold">$48.00</div>
+										  </div>
+										</div>
+									  </div>
+								   </div>
+								   <div class="item">
+									<div class="card">
+										<div class="position-relative overflow-hidden">
+											<div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+												<a href="javascript:;"><i class='bx bx-cart-add' ></i></a>
+											  </div>
+										  <div class="quick-view position-absolute start-0 bottom-0 end-0">
+											<a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewProduct">Quick View</a>
+										  </div>
+										  <a href="javascript:;">
+											<img src="assets/images/similar-products/02.png" class="img-fluid" alt="...">
+										  </a>
+										</div>
+										<div class="card-body px-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <div class="">
+												  <p class="mb-1 product-short-name">Topwear</p>
+												  <h6 class="mb-0 fw-bold product-short-title">White Polo Shirt</h6>
+											  </div>
+											  <div class="icon-wishlist">
+												  <a href="javascript:;"><i class="bx bx-heart"></i></a>
+											  </div>
+										  </div>
+										  <div class="cursor-pointer rating mt-2">
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+										  </div>
+										  <div class="product-price d-flex align-items-center justify-content-start gap-2 mt-2">
+											<div class="h6 fw-light fw-bold text-secondary text-decoration-line-through">$59.00</div>
+											<div class="h6 fw-bold">$48.00</div>
+										  </div>
+										</div>
+									  </div>
+								   </div>
+								   <div class="item">
+									<div class="card">
+										<div class="position-relative overflow-hidden">
+											<div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+												<a href="javascript:;"><i class='bx bx-cart-add' ></i></a>
+											  </div>
+										  <div class="quick-view position-absolute start-0 bottom-0 end-0">
+											<a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewProduct">Quick View</a>
+										  </div>
+										  <a href="javascript:;">
+											<img src="assets/images/similar-products/03.png" class="img-fluid" alt="...">
+										  </a>
+										</div>
+										<div class="card-body px-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <div class="">
+												  <p class="mb-1 product-short-name">Topwear</p>
+												  <h6 class="mb-0 fw-bold product-short-title">White Polo Shirt</h6>
+											  </div>
+											  <div class="icon-wishlist">
+												  <a href="javascript:;"><i class="bx bx-heart"></i></a>
+											  </div>
+										  </div>
+										  <div class="cursor-pointer rating mt-2">
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+										  </div>
+										  <div class="product-price d-flex align-items-center justify-content-start gap-2 mt-2">
+											<div class="h6 fw-light fw-bold text-secondary text-decoration-line-through">$59.00</div>
+											<div class="h6 fw-bold">$48.00</div>
+										  </div>
+										</div>
+									  </div>
+								   </div>
+								   <div class="item">
+									<div class="card">
+										<div class="position-relative overflow-hidden">
+											<div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+												<a href="javascript:;"><i class='bx bx-cart-add' ></i></a>
+											  </div>
+										  <div class="quick-view position-absolute start-0 bottom-0 end-0">
+											<a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewProduct">Quick View</a>
+										  </div>
+										  <a href="javascript:;">
+											<img src="assets/images/similar-products/04.png" class="img-fluid" alt="...">
+										  </a>
+										</div>
+										<div class="card-body px-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <div class="">
+												  <p class="mb-1 product-short-name">Topwear</p>
+												  <h6 class="mb-0 fw-bold product-short-title">White Polo Shirt</h6>
+											  </div>
+											  <div class="icon-wishlist">
+												  <a href="javascript:;"><i class="bx bx-heart"></i></a>
+											  </div>
+										  </div>
+										  <div class="cursor-pointer rating mt-2">
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+										  </div>
+										  <div class="product-price d-flex align-items-center justify-content-start gap-2 mt-2">
+											<div class="h6 fw-light fw-bold text-secondary text-decoration-line-through">$59.00</div>
+											<div class="h6 fw-bold">$48.00</div>
+										  </div>
+										</div>
+									  </div>
+								   </div>
+								   <div class="item">
+									<div class="card">
+										<div class="position-relative overflow-hidden">
+											<div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+												<a href="javascript:;"><i class='bx bx-cart-add' ></i></a>
+											  </div>
+										  <div class="quick-view position-absolute start-0 bottom-0 end-0">
+											<a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewProduct">Quick View</a>
+										  </div>
+										  <a href="javascript:;">
+											<img src="assets/images/similar-products/05.png" class="img-fluid" alt="...">
+										  </a>
+										</div>
+										<div class="card-body px-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <div class="">
+												  <p class="mb-1 product-short-name">Topwear</p>
+												  <h6 class="mb-0 fw-bold product-short-title">White Polo Shirt</h6>
+											  </div>
+											  <div class="icon-wishlist">
+												  <a href="javascript:;"><i class="bx bx-heart"></i></a>
+											  </div>
+										  </div>
+										  <div class="cursor-pointer rating mt-2">
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+										  </div>
+										  <div class="product-price d-flex align-items-center justify-content-start gap-2 mt-2">
+											<div class="h6 fw-light fw-bold text-secondary text-decoration-line-through">$59.00</div>
+											<div class="h6 fw-bold">$48.00</div>
+										  </div>
+										</div>
+									  </div>
+								   </div>
+								   <div class="item">
+									<div class="card">
+										<div class="position-relative overflow-hidden">
+											<div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+												<a href="javascript:;"><i class='bx bx-cart-add' ></i></a>
+											  </div>
+										  <div class="quick-view position-absolute start-0 bottom-0 end-0">
+											<a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewProduct">Quick View</a>
+										  </div>
+										  <a href="javascript:;">
+											<img src="assets/images/similar-products/06.png" class="img-fluid" alt="...">
+										  </a>
+										</div>
+										<div class="card-body px-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <div class="">
+												  <p class="mb-1 product-short-name">Topwear</p>
+												  <h6 class="mb-0 fw-bold product-short-title">White Polo Shirt</h6>
+											  </div>
+											  <div class="icon-wishlist">
+												  <a href="javascript:;"><i class="bx bx-heart"></i></a>
+											  </div>
+										  </div>
+										  <div class="cursor-pointer rating mt-2">
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+										  </div>
+										  <div class="product-price d-flex align-items-center justify-content-start gap-2 mt-2">
+											<div class="h6 fw-light fw-bold text-secondary text-decoration-line-through">$59.00</div>
+											<div class="h6 fw-bold">$48.00</div>
+										  </div>
+										</div>
+									  </div>
+								   </div>
+								   <div class="item">
+									<div class="card">
+										<div class="position-relative overflow-hidden">
+											<div class="add-cart position-absolute top-0 end-0 mt-3 me-3">
+												<a href="javascript:;"><i class='bx bx-cart-add' ></i></a>
+											  </div>
+										  <div class="quick-view position-absolute start-0 bottom-0 end-0">
+											<a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewProduct">Quick View</a>
+										  </div>
+										  <a href="javascript:;">
+											<img src="assets/images/similar-products/07.png" class="img-fluid" alt="...">
+										  </a>
+										</div>
+										<div class="card-body px-0">
+										  <div class="d-flex align-items-center justify-content-between">
+											  <div class="">
+												  <p class="mb-1 product-short-name">Topwear</p>
+												  <h6 class="mb-0 fw-bold product-short-title">White Polo Shirt</h6>
+											  </div>
+											  <div class="icon-wishlist">
+												  <a href="javascript:;"><i class="bx bx-heart"></i></a>
+											  </div>
+										  </div>
+										  <div class="cursor-pointer rating mt-2">
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+											  <i class="bx bxs-star text-warning"></i>
+										  </div>
+										  <div class="product-price d-flex align-items-center justify-content-start gap-2 mt-2">
+											<div class="h6 fw-light fw-bold text-secondary text-decoration-line-through">$59.00</div>
+											<div class="h6 fw-bold">$48.00</div>
+										  </div>
+										</div>
+									  </div>
+								   </div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end similar products-->
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+        <script>
+
+            function hide_alert(){
+                document.getElementById("alert-box").style.display="None";
+               }
+               setTimeout(hide_alert,3000);
+
+			   $(function () {
+				$('[data-toggle="popover"]').popover({
+					trigger: 'focus'
+				});
+			});
+
+			$(document).ready(function () {
+				$('#dismissPopover').popover({
+					trigger: 'focus'
+				});
+			});
+
+        </script>
+		<script>
+			const shareButton = document.getElementById('shareButton');
+			const username = "{{ request.user.buyer.code }}";
+			let url;
+			if (username) {
+				url = window.location.href + '?referal=' + username;
+			} else {
+				url = window.location.href;
+			}
+
+			shareButton.addEventListener('click', () => {
+				if (navigator.share) {
+					shareViaWebShareAPI();
+				} else {
+					alert('This browser is not supported for sharing.');
+				}
+			});
+	
+			async function shareViaWebShareAPI() {
+				try {
+					await navigator.share({
+						title: 'cattnbuy',
+						text: 'Check out this product!',
+						url : url,
+					});
+				} catch (error) {
+					console.error('Error sharing:', error);
+				}
+			}
+		</script>
+		<!--end page wrapper -->
+{% endblock content%}
