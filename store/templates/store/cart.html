@@ -68,7 +68,7 @@
                                 <td class="product-quantity d-sm-flex justify-content-center">
                                     <div class="qty-input">
                                         <button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
-                                        <input id="{{cart_item.pk}}" style="color:black" class="product-qty" type="number" name="product-qty-{{cart_item.pk}}" value="{{cart_item.cart_count}}" min="0" max="100" value="1">
+                                        <input id="{{cart_item.pk}}" style="color:black" class="product-qty" type="number" name="product-qty-{{cart_item.pk}}" value="{{cart_item.cart_count}}" min="1" max="100" value="1">
                                         <button class="qty-count qty-count--add" data-action="add" type="button">+</button>
                                     </div>
                                 </td>
@@ -98,14 +98,15 @@
                             ><i class="w-icon-long-arrow-left"></i>Continue
                             Shopping</a
                         >
-                        <button
+                        <a
+                            href="/clear_cart/"
                             type="submit"
                             class="btn btn-rounded btn-default btn-clear"
                             name="clear_cart"
                             value="Clear Cart"
                         >
                             Clear Cart
-                        </button>
+                    </a>
                     </div>
                 </div>
                 <div class="col-lg-4 sticky-sidebar-wrapper">

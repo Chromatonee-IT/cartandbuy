@@ -25,13 +25,13 @@
                     <h4 class="banner-subtitle font-weight-bold">Accessories Collection</h4>
                     <h3 class="banner-title text-white text-uppercase font-weight-bolder ls-normal">Smart Wrist
                         Watches</h3>
-                    <a href="shop-banner-sidebar.html" class="btn btn-dark btn-rounded btn-icon-right">Discover
+                    <a href="#" class="btn btn-dark btn-rounded btn-icon-right">Discover
                         Now<i class="w-icon-long-arrow-right"></i></a>
                 </div>
             </div>
             <!-- End of Shop Banner -->
 
-            <div class="shop-default-brands mb-5">
+            {% comment %} <div class="shop-default-brands mb-5">
                 <div class="brands-swiper swiper-container swiper-theme "
                     data-swiper-options="{
                         'slidesPerView': 2,
@@ -94,7 +94,7 @@
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
-            </div>
+            </div> {% endcomment %}
             <!-- End of Shop Brands-->
 
             <!-- Start of Shop Category -->
@@ -129,14 +129,14 @@
                         <div class="swiper-slide category-wrap">
                             <div class="category category-ellipse">
                                 <figure class="category-media">
-                                    <a href="/search-products/{{category.classname}}/">
-                                        <img src="{{category.category_image.url}}" alt="Categroy"
-                                            width="190" height="190" style="background-color: #5C92C0; object-fit:content;" />
+                                    <a href="/all_category/{{ cur_category}}/{{category.classname}}/">
+                                    <img src="{{category.category_image.url}}" alt="Categroy"
+                                    width="190" height="190" style="background-color: #5C92C0; object-fit:content;" />
                                     </a>
                                 </figure>
                                 <div class="category-content">
                                     <h4 class="category-name">
-                                        <a href="shop-banner-sidebar.html">{{category.classname}}</a>
+                                        <a href="/all_category/{{ cur_category}}/{{category.classname}}/">{{category.classname}}</a>
                                     </h4>
                                 </div>
                             </div>
@@ -155,8 +155,6 @@
                 <div class="main-content">
                     <nav class="toolbox sticky-toolbox sticky-content fix-top">
                         <div class="toolbox-left">
-                            <a href="#" class="btn btn-primary btn-outline btn-rounded left-sidebar-toggle 
-                                btn-icon-left"><i class="w-icon-category"></i><span>Filters</span></a>
                                 <div class="toolbox-item toolbox-sort select-box text-dark">
                                     <label>Sort By :</label>
                                     <select id="orderby" name="orderby" onchange="product_sorting();" class="form-control">
@@ -224,12 +222,6 @@
                                         {% endif %} alt="Product" width="300"
                                             height="338" />
                                     </a>
-                                    <div class="product-countdown-container">
-                                        <div class="product-countdown countdown-compact" data-until="2021, 9, 9"
-                                            data-format="DHMS" data-compact="false"
-                                            data-labels-short="Days, Hours, Mins, Secs">
-                                            00:00:00:00</div>
-                                    </div>
                                     <div class="product-action-horizontal">
                                         <a href="#" class="btn-product-icon btn-cart w-icon-cart"
                                             title="Add to cart"></a>
@@ -682,7 +674,7 @@
                 <!-- End of Shop Main Content -->
 
                 <!-- Start of Sidebar, Shop Sidebar -->
-                <aside class="sidebar shop-sidebar left-sidebar sticky-sidebar-wrapper">
+                {% comment %} <aside class="sidebar shop-sidebar left-sidebar sticky-sidebar-wrapper">
                     <!-- Start of Sidebar Overlay -->
                     <div class="sidebar-overlay"></div>
                     <a class="sidebar-close" href="#"><i class="close-icon"></i></a>
@@ -776,7 +768,7 @@
                         <!-- End of Collapsible Widget -->
                     </div>
                     <!-- End of Sidebar Content -->
-                </aside>
+                </aside> {% endcomment %}
                 <!-- End of Shop Sidebar -->
             </div>
             <!-- End of Shop Content -->

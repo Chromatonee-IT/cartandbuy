@@ -19,14 +19,14 @@ MESSAGE_TAGS = {
 SECRET_KEY = '()6f$@712andea35dnw^kmaps8u%kc))p%%^%3i+3h6*hob)wq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 SESSION_COOKIE_SECURE = True
 # SESSION_COOKIE_AGE = 1800
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','93.127.206.197','.cartnbuy.in','https://*.cartnbuy.in']
 
-# CSRF_TRUSTED_ORIGINS = ['https://*.cartnbuy.in','.cartnbuy.in']
+CSRF_TRUSTED_ORIGINS = ['https://*.cartnbuy.in','.cartnbuy.in']
 
 # Application definition
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'corsheaders',
     'store.apps.StoreConfig',
     'vendor.apps.VendorConfig',
@@ -105,10 +106,10 @@ WSGI_APPLICATION = 'trendx.wsgi.application'
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'cartandbuy',
-#         'USER': 'cartandbuy',
-#         'PASSWORD': 'cartandbuy',
-#         'HOST': 'database.cpk4o8s449a3.eu-north-1.rds.amazonaws.com',
-#         'PORT': '5432',
+#         'USER': 'admin',
+#         'PASSWORD': 'admin',
+#         'HOST': 'localhost',
+#         'PORT': '5433',
 #     }
 # }
 

@@ -4,21 +4,21 @@
 {% load midcategory_tag %}
 {% load discount_calculate %}
 
-{% comment %} {% include '../assets/ajax/login.html'%} {% endcomment %}
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-    <title>Cart&Buy - Ecommerce</title>
+    <title>Cart&Buy</title>
 
-    <meta name="keywords" content="Marketplace ecommerce responsive HTML5 Template" />
-    <meta name="description"
-        content="Wolmart is powerful marketplace &amp; ecommerce responsive Html5 Template.">
-    <meta name="author" content="D-THEMES">
+    <meta name="keywords" content="e-commerce marketplace, buy online, online shopping, fashion, electronics, home decor, CartnBuy, best deals, online store, shopping platform, top brands, customer reviews, discounts, fast delivery, secure payments, free shipping
+    "/>
+    <meta name="description" content="CartnBuy - Your ultimate online marketplace for fashion, electronics, home decor, and more. Discover top brands, best deals, customer reviews, and enjoy fast delivery with secure payments. Shop now and experience hassle-free online shopping with free shipping on select orders!
+    ">
+    <meta name="author" content="cartnbuy.in">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{% static 'assets/images/icons/cartnbuy-favicon.png'%}">
+    <link rel="icon" type="image/png" href="{% static '/images/favicon.png'%}">
 
     <!-- WebFont.js -->
     <script>
@@ -60,8 +60,6 @@
     <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
 
 </head>
-
-{% comment %} <body> {% endcomment %}
  <body class="home">
     <div class="page-wrapper">
         <h1 class="d-none">Cart&Buy - Ecommerce</h1>
@@ -73,35 +71,6 @@
                         <p class="welcome-msg">Welcome to Cart&Buy!</p>
                     </div>
                     <div class="header-right">
-                        <!-- <div class="dropdown">
-                            <a href="#currency">USD</a>
-                            <div class="dropdown-box">
-                                <a href="#USD">USD</a>
-                                <a href="#EUR">EUR</a>
-                            </div>
-                        </div> -->
-                        <!-- End of DropDown Menu -->
-
-                        <!-- <div class="dropdown">
-                            <a href="#language"><img src="assets/images/flags/eng.png" alt="ENG Flag" width="14"
-                                    height="8" class="dropdown-image" /> ENG</a>
-                            <div class="dropdown-box">
-                                <a href="#ENG">
-                                    <img src="assets/images/flags/eng.png" alt="ENG Flag" width="14" height="8"
-                                        class="dropdown-image" />
-                                    ENG
-                                </a>
-                                <a href="#FRA">
-                                    <img src="assets/images/flags/fra.png" alt="FRA Flag" width="14" height="8"
-                                        class="dropdown-image" />
-                                    FRA
-                                </a>
-                            </div>
-                        </div> -->
-                        <!-- End of Dropdown Menu -->
-                        
-                        <!-- <a href="blog.html" class="d-lg-show">Blog</a> -->
-                        <!-- <a href="contact-us.html" class="d-lg-show">Contact Us</a> -->
                     {% if cur_user %}
                     {% else %}
                         <a href="/vendor/" class="">Become a seller</a>
@@ -290,7 +259,7 @@
                                                             <div
                                                                 class="banner-price-info text-secondary font-weight-bolder text-uppercase text-secondary">
                                                                 20% Off</div>
-                                                            <a href="category.html"
+                                                            <a href="#"
                                                                 class="btn btn-white btn-outline btn-sm btn-rounded">Shop
                                                                 Now</a>
                                                         </div>
@@ -920,7 +889,7 @@
                                                             <div class="product-qty-form mb-2 mr-2 justify-content-center">
                                                                 <div class="qty-input ">
                                                                     <button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
-                                                                    <input id="{{cart_item.pk}}" style="color:black" class="product-qty" type="number" name="product-qty-{{cart_item.pk}}" min="1" max="100" value="1">
+                                                                    <input style="color:black" class="product-qty" type="number" name="product-qty-{{cart_item.pk}}" min="1" max="100" value="1">
                                                                     <button class="qty-count qty-count--add" data-action="add" type="button">+</button>
                                                                 </div>
                                                             </div>
@@ -933,19 +902,15 @@
                                                         <div class="social-links-wrapper mt-1">
                                                             <div class="social-links">
                                                                 <div class="social-icons social-no-color border-thin">
-                                                                    <a href="#"
-                                                                        class="social-icon social-facebook w-icon-facebook"></a>
-                                                                    <a href="#"
-                                                                        class="social-icon social-twitter w-icon-twitter"></a>
-                                                                    <a href="#"
-                                                                        class="social-icon social-pinterest fab fa-pinterest-p"></a>
-                                                                    <a href="#"
-                                                                        class="social-icon social-whatsapp fab fa-whatsapp"></a>
-                                                                    <a type="button" id="shareButton" name="{{product.id}}"
+                                                                    <a onclick="shareOnFacebook({{product.id}},'{{ request.user.buyer.code }}')" class="social-icon social-facebook w-icon-facebook"></a>
+                                                                    {% comment %} <a onclick="shareOnInstagram({{product.id}},'{{ request.user.buyer.code }}')"
+                                                                        class="social-icon social-instagram fab fa-instagram"></a> {% endcomment %}
+                                                                    <a onclick="shareOnWhatsapp({{product.id}},'{{ request.user.buyer.code }}')" class="social-icon social-whatsapp fab fa-whatsapp"></a>
+                                                                    <a type="button" id="shareButton"
                                                                         class="social-icon social-youtube"><i class='bx bx-share-alt'></i></a>
                                                                 </div>
                                                             </div>
-                                                            <span class="divider d-xs-show"></span>
+                                                            <span class="divider"></span>
                                                             <div class="product-link-wrapper d-flex">
                                                                 {% if cur_user %}
                                                                     <a id="product-{{product.id}}"
@@ -1040,9 +1005,6 @@
                                                     <div class="product-details">
                                                         <h4 class="product-name">
                                                             <a href="{% url 'product_single' id=product.id %}">{{product.itmname}}</a>
-                                                        </h4>
-                                                        <h4 class="product-name">
-                                                            <a href="product-default.html">{{product.itmclass}}</a>
                                                         </h4>
                                                         <div class="ratings-container">
                                                             <div class="ratings-full">
@@ -2844,7 +2806,7 @@
                                 <h5 class="banner-subtitle font-weight-bold text-uppercase">Natural Process</h5>
                                 <h3 class="banner-title font-weight-bolder text-capitalize text-white">Cosmetic
                                     Makeup<br>Professional</h3>
-                                <a href="category.html"
+                                <a href="#"
                                     class="btn btn-white btn-link btn-underline btn-icon-right">Shop Now<i
                                         class="w-icon-long-arrow-right"></i></a>
                             </div>
@@ -2860,7 +2822,7 @@
                                 <h5 class="banner-subtitle font-weight-bold text-uppercase">Trending Now</h5>
                                 <h3 class="banner-title font-weight-bolder text-capitalize">Women's
                                     Lifestyle<br>Collection</h3>
-                                <a href="category.html"
+                                <a href="#"
                                     class="btn btn-dark btn-link btn-underline btn-icon-right">Shop Now<i
                                         class="w-icon-long-arrow-right"></i></a>
                             </div>
@@ -2868,7 +2830,7 @@
                     </div>
                 </div>
                 <!-- End of Category Cosmetic Lifestyle -->
-
+        {% comment %} 
                 <div class="product-wrapper-1 appear-animate mb-5">
                     <div class="title-link-wrapper pb-1 mb-4">
                         <h2 class="title ls-normal mb-0">Clothing & Apparel</h2>
@@ -3905,7 +3867,8 @@
                             <!-- End of Produts -->
                         </div>
                     </div>
-                </div>
+                </div> 
+        {% endcomment %}
                 <!-- End of Product Wrapper 1 -->
 
                 <!-- <h2 class="title title-underline mb-4 ls-normal appear-animate">Our Clients</h2>
@@ -4193,13 +4156,13 @@
                     <div class="row">
                         <div class="col-lg-4 col-sm-6">
                             <div class="widget widget-about">
-                                <a href="index.html" class="logo-footer">
-                                    <img src="assets/images/cartnbuy-web-footer.png" alt="logo-footer" width="144"
+                                <a class="logo-footer">
+                                    <img src="{% static 'assets/images/cartnbuy-web-footer.png'%}" alt="logo-footer" width="144"
                                         height="45" />
                                 </a>
                                 <div class="widget-body">
-                                    <p class="widget-about-title">Got Question? Call us 24/7</p>
-                                    <a href="tel:18005707777" class="widget-about-call">1-800-570-7777</a>
+                                    {% comment %} <p class="widget-about-title">Got Question? Call us 24/7</p>
+                                    <a href="tel:18005707777" class="widget-about-call">1-800-570-7777</a> {% endcomment %}
                                     <p class="widget-about-desc">Register now to get updates on exicting offers.
                                     </p>
 

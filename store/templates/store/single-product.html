@@ -208,9 +208,9 @@
                                 {% if size_ins%}
                                 <div class="product-form product-variation-form product-size-swatch">
                                     <label class="mb-1">Size:</label>
-                                    <div class="flex-wrap d-flex align-items-center product-variations">
+                                    <div class="flex-wrap d-flex align-items-center product-variation-size">
                                         {% for size_ins in size_ins%}
-                                        <a onclick="size_active({{size_ins.pk}});" id="{{size_ins.pk}}" class="size">{{size_ins.product_size | upper}}</a>
+                                        <a style="margin-right:5px;" onclick="size_active({{size_ins.pk}});" id="{{size_ins.pk}}" class="size">{{size_ins.product_size | upper}}</a>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -242,16 +242,15 @@
                                 <div class="social-links-wrapper">
                                     <div class="social-links">
                                         <div class="social-icons social-no-color border-thin">
-                                            <a href="#" class="social-icon social-facebook w-icon-facebook"></a>
-                                            <a href="#" class="social-icon social-twitter w-icon-twitter"></a>
-                                            <a href="#"
-                                                class="social-icon social-pinterest fab fa-pinterest-p"></a>
-                                            <a href="#" class="social-icon social-whatsapp fab fa-whatsapp"></a>
+                                            <a onclick="shareOnFacebook({{product.id}},'{{ request.user.buyer.code }}')" class="social-icon social-facebook w-icon-facebook"></a>
+                                            {% comment %} <a onclick="shareOnInstagram({{product.id}},'{{ request.user.buyer.code }}')"
+                                                class="social-icon social-instagram fab fa-instagram"></a> {% endcomment %}
+                                            <a onclick="shareOnWhatsapp({{product.id}},'{{ request.user.buyer.code }}')" class="social-icon social-whatsapp fab fa-whatsapp"></a>
                                             <a type="button" id="shareButton"
                                                 class="social-icon social-youtube"><i class='bx bx-share-alt'></i></a>
                                         </div>
                                     </div>
-                                    <span class="divider d-xs-show"></span>
+                                    <span class="divider"></span>
                                     <div class="product-link-wrapper d-flex">
                                     {% if cur_user %}
                                         <a id="product-{{product.id}}"
@@ -459,19 +458,17 @@
                                     <div class="col-md-6 pl-2 pl-md-6 mb-4">
                                         <div class="vendor-user">
                                             <figure class="vendor-logo mr-4">
-                                                <a href="#">
                                                     <img src={% if store_info.store_logo%}"{{store_info.store_logo.url}}"{% else %}"{% static 'images/profile_av.svg'%}"{% endif %}
                                                         alt="Vendor Logo" width="80" height="80" />
-                                                </a>
                                             </figure>
                                             <div>
                                                 <div class="vendor-name"><a href="#">{{store_info.store_vendor.first_name}}</a></div>
                                                 <div class="ratings-container">
                                                     <div class="ratings-full">
-                                                        <span class="ratings" style="width: 90%;"></span>
+                                                        <span class="ratings" style="width: 0%;"></span>
                                                         <span class="tooltiptext tooltip-top"></span>
                                                     </div>
-                                                    <a href="#" class="rating-reviews">(32 Reviews)</a>
+                                                    <a href="#" class="rating-reviews">(0 Reviews)</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -580,8 +577,6 @@
                                         <div class="review-form-wrapper">
                                             <h3 class="title tab-pane-title font-weight-bold mb-1">Submit Your
                                                 Review</h3>
-                                            <p class="mb-3">Your email address will not be published. Required
-                                                fields are marked *</p>
                                             <form action="#" method="POST" class="review-form">
                                                 <div class="rating-form">
                                                     <label for="rating">Your Rating Of This Product :</label>
@@ -660,12 +655,14 @@
                                                             <p>{{review.review}}</p>
                                                             <div class="comment-action">
                                                                 <div class="review-image">
-                                                                        <figure>
-                                                                            <img src="{% static 'assets/images/products/default/review-img-1.jpg'%}"
-                                                                                width="60" height="60"
-                                                                                alt="Attachment image of John Doe's review on Electronics Black Wrist Watch"
-                                                                                data-zoom-image="assets/images/products/default/review-img-1-800x900.jpg" />
+                                                                        <a href="#">
+                                                                            <figure>
+                                                                                <img src="{% static 'assets/images/products/default/review-img-1.jpg'%}"
+                                                                                    width="60" height="60"
+                                                                                    alt="Attachment image of John Doe's review on Electronics Black Wrist Watch"
+                                                                                    data-zoom-image="{% static 'assets/images/products/default/review-img-1.jpg'%}" />
                                                                         </figure>
+                                                                        </a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1042,55 +1039,6 @@
     </div>
     <!-- End of Page Content -->
 </main>
-
-
-{% if messages%}
-{% for message in messages%}
-{{message}}
-{% endfor %}
-<script>
- function popup_message() {
-    var imgElements = document.querySelectorAll("#product-thumb");
-    var imageUrl = null;
-    for (var i = 0; i < imgElements.length; i++) {
-      var src = imgElements[i].getAttribute('src');
-       if (src) {
-            imageUrl = window.location.origin+src;
-            break;
-       }
-    }
-    var product_name = document.getElementById("product-title").textContent;
-    var divElementCode = `<div class="minipopup-box show" style="top: 0px">
-        <div class="product product-list-sm product-cart">
-            <figure class="product-media">
-                <a href="#"><img src="${imageUrl}" alt="Product" width="80" height="90" /></a>
-            </figure>
-            <div class="product-details">
-                <h4 class="product-name"><a href="#">${product_name}</a></h4>
-                <p>has been added to cart:</p>
-            </div>
-        </div>
-        <div class="product-action">
-            <a href="/cart/" class="btn btn-rounded btn-sm">View Cart</a>
-            <a href="#" class="btn btn-dark btn-rounded btn-sm">Checkout</a>
-        </div>
-    </div>`;
-
-    var tempContainer = document.createElement('div');
-    tempContainer.innerHTML = divElementCode;
-    var newDiv = tempContainer.firstChild;
-    var parentDiv = document.querySelector('.minipopup-area');
-    parentDiv.appendChild(newDiv);
-    setTimeout(function() {
-        parentDiv.removeChild(newDiv);
-    }, 5000);
-
-};
-setTimeout(popup_message,1);
-</script>
-{% endif %}
-
-
 
 <script>
     function color_active(color) {

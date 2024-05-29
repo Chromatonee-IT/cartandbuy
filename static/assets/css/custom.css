@@ -215,7 +215,7 @@
 		outline:none;
 		z-index:1;
 	  }
-	  .menu-container{z-index:1; font-weight:bold; font-size:0.8em; width:92%; background:#f1f1f1;  position:absolute; text-align:center; font-size:12px;}
+	  .menu-container{z-index:1; font-weight:bold; font-size:0.8em; width:100%; background:#f1f1f1;  position:relative; text-align:center; font-size:12px;}
 	  .menu-content ul {margin: 0; padding: 0; list-style-type: none; list-style-image: none;}
 	  .menu-content li {display: block; padding:15px 0 15px 0; border-bottom:#dddddd 1px solid;}
 	  .menu-content li:hover{display: block; background:#ffffff; padding:15px 0 15px 0; border-bottom:#dddddd 1px solid;}
@@ -230,3 +230,7 @@
 		margin-top:5px; 
 		margin:0 auto;
 	  }
+
+
+
+

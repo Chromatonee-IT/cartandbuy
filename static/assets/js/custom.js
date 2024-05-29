@@ -1,6 +1,7 @@
 
     new Autocomplete('#autocomplete', {
         search: input =>{
+            if (input.length < 1) { return [] }
             var element = document.getElementById("search").closest("div")
             if (document.activeElement === document.querySelector('input')) { 
                 element.style.zIndex = "10000000000000000";
@@ -45,6 +46,7 @@
     })
     new Autocomplete('#autocomplete-mobile', {
         search: input =>{
+            if (input.length < 1) { return [] }
             const url = `/product_search/${(input)}/`
             return new Promise(resolve => {
                 fetch(url)
@@ -329,31 +331,115 @@ function addToCart(){
     var product_id = document.getElementById("product_id").value;
     var count = document.getElementById("count").value;
 
-    if (all_colors.length > 0){
-        if (activecolor[0]){
-            var cart_url = window.location.origin + '/add_to_cart/' + `${product_id}` + '/' + '?color=' + activecolor[0].id;
-            if (all_sizes.length > 0){
-                cart_url += '&size=' + active_size[0].id;
-            }
+
+
+
+    if (all_colors.length > 0 & all_sizes.length > 0){
+        if (activecolor[0] && active_size[0]){
+            var cart_url = window.location.origin + '/add_to_cart_api/' + `${product_id}` + '/' + '?color=' + activecolor[0].id + '&size=' + active_size[0].id;
+            console.log(activecolor[0].id);
+            console.log(active_size[0].id);
         }else{
-            window.alert("Please select color and size.");
+            window.alert("Please select a color and size.");
         }
     }
-    else if (all_sizes.length > 0){
-        var cart_url = window.location.origin + '/add_to_cart/' + `${product_id}` + '/' + '?size=' + active_size[0].id;
+    else if (all_sizes.length > 0 & all_colors.length == 0){
+        if ( active_size[0]){
+            var cart_url = window.location.origin + '/add_to_cart_api/' + `${product_id}` + '/' + '?size=' + active_size[0].id;
+        }else{
+            window.alert("Please select a size.");
+        }
+    }
+    else if (all_colors.length > 0 & all_sizes.length == 0){
+        if ( activecolor[0]){
+            var cart_url = window.location.origin + '/add_to_cart_api/' + `${product_id}` + '/' + '?color=' + activecolor[0].id;
+        }else{
+            window.alert("Please select a color.");
+        }
     }
     else{
-        var cart_url = window.location.origin + '/add_to_cart/' + `${product_id}` + '/';
+        var cart_url = window.location.origin + '/add_to_cart_api/' + `${product_id}` + '/';
     } 
 
     if (count >1){
         cart_url += '&quantity=' + count;
     }
     console.log(cart_url);
-    window.location.href = cart_url;
 
+    //window.location.href = cart_url;
+    fetchData(cart_url)
+    .then(data => {
+        if (data.status == true) {
+            popup_message();
+            let product_count_id = '';
+
+            if (activecolor[0] && active_size[0]) {
+                product_count_id = activecolor[0].id + '-' + active_size[0].id;
+            } else if (activecolor[0]) {
+                product_count_id = activecolor[0].id + '-';
+            } else if (active_size[0]) {
+                product_count_id =  '-' + active_size[0].id;
+            }
+            console.log(product_count_id)
+
+            let product_count_ele = document.getElementById(product_count_id);
+            if (product_count_ele){
+                let product_count =  parseInt(product_count_ele.textContent, 10) + data.quantity
+                product_count_ele.textContent = product_count;
+            }else{
+                location.reload();
+            }
+        }else{
+            console.log(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
   }
   document.getElementById("addtocart").addEventListener("click", addToCart);
+
+
+
+  function popup_message() {
+    var imgElements = document.querySelectorAll("#product-thumb");
+    var imageUrl = null;
+    for (var i = 0; i < imgElements.length; i++) {
+      var src = imgElements[i].getAttribute('src');
+       if (src) {
+            imageUrl = window.location.origin+src;
+            break;
+       }
+    }
+    var product_name = document.getElementById("product-title").textContent;
+    var divElementCode = `<div class="minipopup-box show" style="top: 0px">
+        <div class="product product-list-sm product-cart">
+            <figure class="product-media">
+                <a href="#"><img src="${imageUrl}" alt="Product" width="80" height="90" /></a>
+            </figure>
+            <div class="product-details">
+                <h4 class="product-name"><a href="#">${product_name}</a></h4>
+                <p>has been added to cart:</p>
+            </div>
+        </div>
+        <div class="product-action">
+            <a href="/cart/" class="btn btn-rounded btn-sm">View Cart</a>
+            <a href="#" class="btn btn-dark btn-rounded btn-sm">Checkout</a>
+        </div>
+    </div>`;
+
+    var tempContainer = document.createElement('div');
+    tempContainer.innerHTML = divElementCode;
+    var newDiv = tempContainer.firstChild;
+    var parentDiv = document.querySelector('.minipopup-area');
+    parentDiv.appendChild(newDiv);
+    setTimeout(function() {
+        parentDiv.removeChild(newDiv);
+    }, 5000);
+
+};
+
+
 
 
   function show_hide_menu() {
@@ -363,6 +449,32 @@ function addToCart(){
     });
   };
 
+
+  function shareOnFacebook(id,username) {
+    // Construct the Facebook share URL
+    const url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.origin + '/product_single/' + id +'/'+ '?referal=' + username);
+    window.open(url, '_blank');
+  }
+
+
+  function shareOnWhatsapp(id, username) {
+    let link = encodeURIComponent(window.location.origin + '/product_single/' + id + '/' + '?referal=' + username);
+    let whatsappURL = 'https://api.whatsapp.com/send/?text=Hello%2C%0ACheck%20out%20this%20product%F0%9F%A4%A9%21%0ALink%3A%20'+link;
+  
+    if (navigator.userAgent.indexOf('WhatsApp') !== -1) {
+      window.location.href = whatsappURL;
+    } else {
+      window.open(whatsappURL, '_blank');
+    }
+  }
+
+  
+  function shareOnInstagram(id, username) {
+    const url = window.location.origin + '/product_single/' + id + '/' + '?referal=' + username;
+    const message = "Check out this cool product! Open the Instagram app to share this link.";
+    alert(message + "\n\nLink: " + url);
+  }
+  
 
 
   

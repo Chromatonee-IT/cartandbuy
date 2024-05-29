@@ -742,8 +742,6 @@ def add_to_cart(request,id):
         else:
             size_variant = None
 
-        print(size_variant)
-
         if product_variants.objects.filter(product_id=product).exists() and not color_variant:
             messages.error(request,"Please select a color.")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -769,7 +767,7 @@ def add_to_cart(request,id):
 
             cart_items.cart_count = quantity
             cart_items.save()
-        messages.success(request,"Added to cart")
+            messages.success(request,"Added to cart")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
         print(e)
@@ -778,29 +776,57 @@ def add_to_cart(request,id):
 
 @login_required(login_url='login')
 def add_to_cart_api(request,id):
-    color_variant = request.GET.get('color','')
     product = products.objects.filter(id=id).first()
-    product_variant_ins = product_variants.objects.filter(product_id=product).exists()
+    count = request.GET.get('quantity','')
+    if count != '':
+        quantity = int(count)
+    else:
+        quantity = 1
+    color_variant = request.GET.get('color','none')
+    size_variant = request.GET.get('size','none')
+
     user = request.user
     cart, _ = Cart.objects.get_or_create(user = user, is_paid = False)
-    if product_variant_ins and not color_variant:
+    if color_variant !='none':
+        color_variant_ins = product_variants.objects.get(product_id = product,varient_name = color_variant).pk
+    else:
+        color_variant_ins = None
+    if size_variant != 'none':
+        size_variant_ins = product_sizes.objects.filter(product=product,id=size_variant).first().pk
+    else:
+        size_variant_ins = None
+
+    if product_variants.objects.filter(product_id=product).exists() and color_variant_ins == None:
+        messages.error(request,"Please select a color.")
         return JsonResponse({
             'status': False,
             'message': 'Please select a color.'
         })
-    elif product_sizes.objects.filter(product=product).exists() and not color_variant:
+    elif product_sizes.objects.filter(product=product,id=size_variant).exists() and size_variant_ins == None:
+        messages.error(request,"Please select a size.")
         return JsonResponse({
             'status': False,
             'message': 'Please select a size.'
         })
-    if color_variant != "":
-            cart_items = cartItems.objects.create(cart_ins = cart, product = product,)
-            color_variant_ins = product_variants.objects.get(varient_name = color_variant)
+    
+    cart_item_exists = cartItems.objects.filter(cart_ins = cart, product = product,variant_id = color_variant_ins,size = size_variant_ins).first()
+    if cart_item_exists:
+        cart_item_exists.cart_count += quantity
+        cart_item_exists.save()
+    else:
+        cart_items = cartItems.objects.create(cart_ins = cart, product = product)
+        if color_variant and product_variants.objects.filter(product_id=product).exists():
+            color_variant_ins = product_variants.objects.get(product_id = product,varient_name = color_variant_ins)
             cart_items.variant = color_variant_ins
-            cart_items.save()
+        if size_variant and product_sizes.objects.filter(product=product,id=size_variant_ins).exists():
+            size_variant_ins = product_sizes.objects.get(product=product,id = size_variant)
+            cart_items.size = size_variant_ins
+        cart_items.cart_count = quantity
+        cart_items.save()
 
     return JsonResponse({
             'status': True,
+            'quantity': quantity,
             'message': 'Added to cart.'
         })
 

@@ -169,6 +169,10 @@ class category(models.Model):
 
     def __str__(self):
         return self.classname
+    
+    def get_absolute_url(self):
+        return f'/category/{self.classname}'
+    
 
 class midcategory(models.Model):
     itmclass = models.ForeignKey(category,on_delete=models.SET_NULL,null=True)
@@ -178,6 +182,9 @@ class midcategory(models.Model):
 
     def __str__(self):
         return str(self.itmclass)+" - "+str(self.classname)
+    def get_absolute_url(self):
+        return f'/category/{self.itmclass.classname}/{self.classname}'
+    
 
 class subcategory(models.Model):
     itmclass = models.ForeignKey(category,on_delete=models.SET_NULL,null=True, related_name="sub_category")
@@ -234,6 +241,9 @@ class products(models.Model):
     def get_sizes(self):
         product_size = product_sizes.objects.filter(product = self.id)
         return product_size
+    
+    def get_absolute_url(self):
+        return f'/product_single/{self.itmtitle}'
     
 
 class product_images(models.Model):
